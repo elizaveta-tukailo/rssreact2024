@@ -1,9 +1,19 @@
 import { PureComponent } from 'react';
 import classes from './Search.module.css';
+import { InputValue } from '../../types';
 
 class Search extends PureComponent {
-  handleFormSubmit = (): void => {};
-  handleChange = () => {};
+  state: InputValue = {
+    value: '',
+  };
+  handleFormSubmit = (): void => {
+    const name = this.state.value;
+    localStorage.setItem('Name', name);
+  };
+  handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value.toLowerCase();
+    this.setState({ value: value });
+  };
 
   render() {
     return (
@@ -11,7 +21,7 @@ class Search extends PureComponent {
         <input
           className={classes.search__input}
           type="text"
-          name=""
+          name="name"
           placeholder="Type here"
           onChange={this.handleChange}
         />
