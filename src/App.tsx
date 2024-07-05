@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import Search from './components/Search/Search';
+import MainPage from './components/MainPage/MainPage';
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
         <header>
           <Search />
         </header>
+        <MainPage />
       </>
     );
   }
