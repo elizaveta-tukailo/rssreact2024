@@ -1,15 +1,15 @@
 import { Component } from 'react';
-import Search from './components/Search/Search';
-import MainPage from './components/MainPage/MainPage';
+import ErrorBoundary from './components/ErrorBoundary';
+import MainPage from './pages/MainPage';
+import './App.css';
 
 class App extends Component {
   render() {
     return (
       <>
-        <header>
-          <Search />
-        </header>
-        <MainPage />
+        <ErrorBoundary>
+          <MainPage />
+        </ErrorBoundary>
       </>
     );
   }
