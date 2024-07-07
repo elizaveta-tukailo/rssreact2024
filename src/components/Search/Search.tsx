@@ -1,15 +1,20 @@
-import { PureComponent } from 'react';
-import classes from './Search.module.css';
-import { InputValue } from '../../types';
+import { Component } from 'react';
+import styles from './Search.module.css';
 
-class Search extends PureComponent {
-  state: InputValue = {
+type searchQuery = {
+  value: string;
+};
+
+class Search extends Component {
+  state: searchQuery = {
     value: '',
   };
+
   handleFormSubmit = (): void => {
     const name = this.state.value;
-    localStorage.setItem('Name', name);
+    localStorage.setItem('searchQuery', name);
   };
+
   handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value.toLowerCase();
     this.setState({ value: value });
@@ -17,15 +22,15 @@ class Search extends PureComponent {
 
   render() {
     return (
-      <form className={classes.search__form} onSubmit={this.handleFormSubmit}>
+      <form className={styles.search__form} onSubmit={this.handleFormSubmit}>
         <input
-          className={classes.search__input}
+          className={styles.search__input}
           type="text"
           name="name"
           placeholder="Type here"
           onChange={this.handleChange}
         />
-        <button className={classes.search__button} type="submit">
+        <button className={styles.search__button} type="submit">
           Search
         </button>
       </form>
