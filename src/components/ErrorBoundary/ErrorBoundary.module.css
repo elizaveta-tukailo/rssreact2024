@@ -1,0 +1,13 @@
+.error__button {
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-bottom: 20px;
+  padding: 16px;
+  background-color: #3aca95;
+  border-radius: 8px;
+  border: 1px solid #c8c8c8;
+}
+.error__button:hover {
+  background-color: #f3f3f3;
+}
