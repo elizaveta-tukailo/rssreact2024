@@ -1,28 +1,19 @@
+import ICard from '../../interfaces/ICard';
 import styles from './card.module.css';
 
 interface CardProps {
-  name: string;
-  height: number;
-  hair_color: string;
-  skin_color: string;
-  gender: string;
+  card: ICard | null;
 }
 
-export default function Card({
-  name,
-  height,
-  hair_color,
-  skin_color,
-  gender,
-}: CardProps) {
+export default function Card({ card }: CardProps) {
   return (
     <div className={styles.people__item}>
-      <div className={styles.item__name}>{name}</div>
+      <div className={styles.item__name}>{card?.name}</div>
       <div className={styles.item__info}>
-        <div>Height: {height}</div>
-        <div>Hair color: {hair_color}</div>
-        <div>Skin color: {skin_color}</div>
-        <div>Gender: {gender} </div>
+        <div>Height: {card?.height}</div>
+        <div>Hair color: {card?.hair_color}</div>
+        <div>Skin color: {card?.skin_color}</div>
+        <div>Gender: {card?.gender} </div>
       </div>
     </div>
   );
