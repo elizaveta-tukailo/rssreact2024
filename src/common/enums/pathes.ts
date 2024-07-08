@@ -1,5 +1,5 @@
-enum AppPathesEnum {
+enum PathesEnum {
   'home' = '/',
 }
 
-export default AppPathesEnum;
+export default PathesEnum;
