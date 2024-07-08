@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import styles from './ErrorPage.module.css';
+import styles from './error-page.module.css';
 
 class ErrorPage extends Component {
   handleResetSubmit = (): void => {

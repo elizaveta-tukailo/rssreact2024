@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Loader from '../../components/Loader';
-import styles from './MainPage.module.css';
+import styles from './main-page.module.css';
 import Card from '../../components/Card';
 import Search from '../../components/Search';
 import ErrorButton from '../../components/ErrorBoundary/Button';
