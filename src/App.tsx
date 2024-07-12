@@ -1,9 +1,9 @@
 import ErrorBoundary from './components/ErrorBoundary';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/main-page';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
-export default function App() {
+const App: React.FC = () => {
   return (
     <>
       <ErrorBoundary>
@@ -13,4 +13,5 @@ export default function App() {
       </ErrorBoundary>
     </>
   );
-}
+};
+export default App;
