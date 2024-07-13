@@ -1,40 +1,37 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import styles from './search.module.css';
 
 type searchQuery = {
   value: string;
 };
 
-class Search extends Component {
-  state: searchQuery = {
-    value: '',
-  };
+const Search: React.FC = () => {
+  const [formData, setFormData] = useState<searchQuery>({ value: '' });
 
-  handleFormSubmit = (): void => {
-    const name = this.state.value;
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    const name = formData.value;
     localStorage.setItem('searchQuery', name);
   };
 
-  handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value.toLowerCase();
-    this.setState({ value: value });
+    setFormData({ value: value });
   };
 
-  render() {
-    return (
-      <form className={styles.search__form} onSubmit={this.handleFormSubmit}>
-        <input
-          className={styles.search__input}
-          type="text"
-          name="name"
-          placeholder="Type here"
-          onChange={this.handleChange}
-        />
-        <button className={styles.search__button} type="submit">
-          Search
-        </button>
-      </form>
-    );
-  }
-}
+  return (
+    <form className={styles.search__form} onSubmit={handleFormSubmit}>
+      <input
+        className={styles.search__input}
+        type="text"
+        name="name"
+        placeholder="Type here"
+        onChange={handleChange}
+      />
+      <button className={styles.search__button} type="submit">
+        Search
+      </button>
+    </form>
+  );
+};
 export default Search;
