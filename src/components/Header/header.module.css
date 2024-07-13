@@ -1,11 +1,11 @@
 .header {
-    padding: 20px 0;
-    background-color: #2C7DFB;
+  padding: 20px 0;
+  background-color: #2c7dfb;
 }
 .header__nav a {
-    color: #ffffff;
-    text-decoration: none;
+  color: #ffffff;
+  text-decoration: none;
 }
 .header__nav a.active {
-    color: #FECD27;
+  color: #fecd27;
 }
