@@ -1,24 +1,20 @@
-import { Component } from 'react';
 import styles from './error-page.module.css';
 
-class ErrorPage extends Component {
-  handleResetSubmit = (): void => {
+const ErrorPage: React.FC = () => {
+  const handleResetSubmit = () => {
     localStorage.setItem('searchQuery', '');
   };
-  render() {
-    return (
-      <>
-        <form onSubmit={this.handleResetSubmit}>
-          <div className={styles.container}>
-            <h1>Error</h1>
-            <button className={styles.reset} type="submit">
-              Reset
-            </button>
-          </div>
-        </form>
-      </>
-    );
-  }
-}
+
+  return (
+    <form onSubmit={handleResetSubmit}>
+      <div className={styles.container}>
+        <h1>Error</h1>
+        <button className={styles.reset} type="submit">
+          Reset
+        </button>
+      </div>
+    </form>
+  );
+};
 
 export default ErrorPage;
