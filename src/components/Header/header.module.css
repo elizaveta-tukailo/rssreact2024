@@ -1,4 +1,11 @@
-.search__wrapper {
+.header {
     padding: 20px 0;
-    border-bottom: 1px solid #c8c8c8;
-  }
+    background-color: #2C7DFB;
+}
+.header__nav a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.header__nav a.active {
+    color: #FECD27;
+}
