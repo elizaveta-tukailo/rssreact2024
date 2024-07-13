@@ -1,0 +1,35 @@
+.pagination {
+    margin: 0 auto 60px;
+    width: max-content;
+}
+.pagination a {
+    margin: 0 6px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    border: 1px solid #2C7DFB;
+    text-decoration: none;
+    text-align: center;
+}
+.pagination a.active {
+    color: #ffffff;
+    background-color: #2C7DFB;
+}
+.pagination a:hover {
+    background-color: #2C7DFB;
+    color: #ffffff;
+}
+.disabled-pagination {
+    pointer-events: none;
+}
+.item:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+.item:active {
+    opacity: 0.5;
+}
+a.active {
+    opacity: 0.5;
+}
