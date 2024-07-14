@@ -41,13 +41,15 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     "react-compiler/react-compiler": "error"
   },
-  overrides: {
-    "files": ["tests/**/*"],
-    "plugins": ["jest"],
-    "env": {
-      "jest/globals": true
+  overrides: [
+    {
+      files: ["tests/**/*"],
+      plugins: ["jest"],
+      env: {
+        "jest/globals": true
+      }
     }
-  },
+  ],
   settings: {
     react: {
       pragma: 'React',
