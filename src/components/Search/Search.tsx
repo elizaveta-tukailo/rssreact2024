@@ -1,37 +1,45 @@
-import { useState } from 'react';
+import { ChangeEvent } from 'react';
+import useSearchQuery from '../../hooks/useSearchQuery';
 import styles from './search.module.css';
-
-type searchQuery = {
-  value: string;
-};
+import { useNavigate } from 'react-router-dom';
 
 const Search: React.FC = () => {
-  const [formData, setFormData] = useState<searchQuery>({ value: '' });
+  const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
+  const activeStyle = localStorage.getItem('activeCard');
+  const navigate = useNavigate();
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const name = formData.value;
-    localStorage.setItem('searchQuery', name);
+    navigate(`?search=${searchQuery}`);
+    localStorage.setItem('searchQuery', searchQuery);
   };
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value.toLowerCase();
-    setFormData({ value: value });
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
-    <form className={styles.search__form} onSubmit={handleFormSubmit}>
-      <input
-        className={styles.search__input}
-        type="text"
-        name="name"
-        placeholder="Type here"
-        onChange={handleChange}
-      />
-      <button className={styles.search__button} type="submit">
-        Search
-      </button>
-    </form>
+    <div
+      className={
+        activeStyle === 'activeCard'
+          ? `${styles['search__form-wrap']} ${styles['search__form-wrap--disabled']}`
+          : `${styles['search__form-wrap']}`
+      }
+    >
+      <form className={styles.search__form} onSubmit={handleFormSubmit}>
+        <input
+          className={styles.search__input}
+          type="text"
+          name="name"
+          value={searchQuery}
+          placeholder="Type here"
+          onChange={handleChange}
+        />
+        <button className={styles.search__button} type="submit">
+          Search
+        </button>
+      </form>
+    </div>
   );
 };
 export default Search;
