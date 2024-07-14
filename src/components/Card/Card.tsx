@@ -34,7 +34,7 @@ const Card = () => {
     const isLoaded = stateCard.isLoaded;
     if (!isLoaded) {
       return <Loader />;
-    } else if (card && card.location && card.created) {
+    } else if (card && card.location) {
       return (
         <div className={styles['card__item-wrap']}>
           <div className={styles['card__item']}>

@@ -6,8 +6,6 @@ interface ICard {
   species: string;
   type: string;
   gender: string;
-  planet: string;
-  created?: string;
   location?: {
     name: string;
     url: string;

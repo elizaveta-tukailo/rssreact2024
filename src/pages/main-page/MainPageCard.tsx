@@ -34,9 +34,6 @@ const MainPageCard = (props: ICard) => {
 
       <div className={styles['main-people__item-info']}>
         <h3 className={styles['main-people__item-title']}> {props.name} </h3>
-        {props.planet && (
-          <div className={styles['info__item']}>Planet: {props.planet}</div>
-        )}
         {props.gender && (
           <div className={styles['info__item']}>{props.gender}</div>
         )}

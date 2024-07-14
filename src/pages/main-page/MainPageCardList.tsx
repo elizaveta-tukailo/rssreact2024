@@ -7,7 +7,7 @@ type Card = {
 
 const CardList = (props: Card) => {
   const cards = props.cards;
-  if (cards) {
+  if (cards.length > 0) {
     return (
       <>
         {cards.map((item: ICard) => {
@@ -21,8 +21,6 @@ const CardList = (props: Card) => {
               species={item.species}
               type={item.type}
               gender={item.gender}
-              planet={item.planet}
-              created={item.created}
               location={item.location}
             />
           );
