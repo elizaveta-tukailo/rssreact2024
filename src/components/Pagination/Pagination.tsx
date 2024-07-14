@@ -1,20 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './pagination.module.css';
 import { NavLink } from 'react-router-dom';
-import { BASE_URL } from '../../common/constants';
 
 const Pagination = () => {
-  const [itemsCount, setItemsCount] = useState(0);
+  const itemsCount = 862;
   const [page, setPage] = useState(1);
   const activeStyle = localStorage.getItem('active');
 
-  useEffect(() => {
-    fetch(`${BASE_URL}/`)
-      .then((res) => res.json())
-      .then((info) => {
-        setItemsCount(info.info.count);
-      });
-  });
   const itemsPerPage = 20;
   const pages = [];
   const pagesCount = Math.ceil(itemsCount / itemsPerPage);
