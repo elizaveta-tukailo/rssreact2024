@@ -7,7 +7,7 @@ import Loader from '../../components/Loader';
 import Search from '../../components/Search';
 import ErrorButton from '../../components/ErrorBoundary/Button';
 import Pagination from '../../components/Pagination';
-import MainPageCard from './MainPageCard';
+import CardList from './MainPageCardList';
 
 const MainPage: React.FC = () => {
   const searchQuery = localStorage.getItem('searchQuery');
@@ -62,23 +62,7 @@ const MainPage: React.FC = () => {
   const cardsBlock = (
     <div className={styles['main-people__wrap']}>
       <div className={styles['main-people__items']} onClick={closeModalWindow}>
-        {cards.map((item) => {
-          return (
-            <MainPageCard
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              image={item.image}
-              status={item.status}
-              species={item.species}
-              type={item.type}
-              gender={item.gender}
-              planet={item.planet}
-              created={item.created}
-              location={item.location}
-            />
-          );
-        })}
+        {<CardList cards={cards} />}
       </div>
     </div>
   );
@@ -115,7 +99,7 @@ const MainPage: React.FC = () => {
           <Pagination />
         </>
       )}
-      {error && <div className={styles.error}>Nothing found</div>}
+      {error && <div className={styles.error}>Error</div>}
     </>
   );
 };
