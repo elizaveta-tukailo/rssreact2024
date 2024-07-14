@@ -1,104 +1,123 @@
-import { Component } from 'react';
-import Loader from '../../components/Loader';
+import { useCallback, useEffect, useState } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { BASE_URL } from '../../common/constants';
 import styles from './main-page.module.css';
-import Card from '../../components/Card';
+import ICard from '../../interfaces/ICard';
+import Loader from '../../components/Loader';
 import Search from '../../components/Search';
 import ErrorButton from '../../components/ErrorBoundary/Button';
+import Pagination from '../../components/Pagination';
+import MainPageCard from './MainPageCard';
 
-type CardItem = {
-  name: string;
-  height: number;
-  hair_color: string;
-  skin_color: string;
-  gender: string;
-};
+const MainPage: React.FC = () => {
+  const searchQuery = localStorage.getItem('searchQuery');
+  const [cards, setCards] = useState<ICard[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [error, setIsErrorOccured] = useState<boolean>(false);
+  const { id } = useParams();
+  const activeStyle = localStorage.getItem('active');
+  const navigate = useNavigate();
 
-class MainPage extends Component<
-  Record<string, never>,
-  {
-    searchQuery: string;
-    cards: JSX.Element | JSX.Element[] | null;
-    isLoaded: boolean;
-    error: null;
-  }
-> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      searchQuery: localStorage.getItem('searchQuery') || '',
-      cards: null,
-      isLoaded: false,
-      error: null,
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.renderCards = this.renderCards.bind(this);
-    this.updateCards = this.updateCards.bind(this);
-  }
-
-  componentDidMount() {
-    this.updateCards();
-  }
-
-  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const searchQuery = e.target.value;
-    this.setState({ searchQuery });
-    this.updateCards();
-  }
-
-  renderCards(cardsValues: Array<CardItem>) {
-    const loading = this.state.isLoaded;
-    if (!loading) {
-      return <Loader />;
-    } else if (cardsValues.length > 0) {
-      const cards = cardsValues.map((item: CardItem) => (
-        <Card
-          name={item.name}
-          height={item.height}
-          hair_color={item.hair_color}
-          skin_color={item.skin_color}
-          gender={item.gender}
-          key={item.name}
-        />
-      ));
-      return <div className={styles.people__items}>{cards}</div>;
-    } else {
-      return <div className={styles.people__nothingfound}>No items found</div>;
+  const updateCards = useCallback(() => {
+    let pageParams = id ? `?page=${id}` : '?page=1';
+    let searchName = '';
+    if (searchQuery) {
+      pageParams = '';
+      searchName = `?name=${searchQuery.toLocaleLowerCase()}`;
     }
-  }
 
-  updateCards() {
-    let searchQueryString = '';
-    this.state.searchQuery
-      ? (searchQueryString = `&search=${this.state.searchQuery}`)
-      : (searchQueryString = '');
-    fetch(`https://swapi.dev/api/people/?page=1${searchQueryString}`)
+    fetch(`${BASE_URL}/${pageParams}${searchName}`)
       .then((res) => res.json())
       .then(
         (result) => {
-          this.setState({
-            isLoaded: true,
-            cards: this.renderCards(result.results),
-          });
+          if (result.results) {
+            setIsLoaded(true);
+            setCards(() => result.results);
+            setIsErrorOccured(() => false);
+          } else {
+            setIsLoaded(true);
+            setCards(() => []);
+            setIsErrorOccured(() => true);
+          }
         },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
+        () => {
+          setIsLoaded(true);
+          setCards(() => []);
+          setIsErrorOccured(() => true);
         }
       );
-  }
+  }, [searchQuery, id]);
 
-  render() {
-    return (
-      <div className="container">
-        <div className={styles.search__wrapper}>
-          <ErrorButton />
-          <Search />
-        </div>
-        {this.state.cards}
+  useEffect(() => {
+    updateCards();
+  }, [updateCards]);
+
+  const closeModalWindow = () => {
+    if (activeStyle === 'activeCard') {
+      localStorage.setItem('active', '');
+      navigate(-1);
+    }
+  };
+
+  const cardsBlock = (
+    <div className={styles['main-people__wrap']}>
+      <div className={styles['main-people__items']} onClick={closeModalWindow}>
+        {cards.map((item) => {
+          return (
+            <MainPageCard
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              image={item.image}
+              status={item.status}
+              species={item.species}
+              type={item.type}
+              gender={item.gender}
+              planet={item.planet}
+              created={item.created}
+              location={item.location}
+            />
+          );
+        })}
       </div>
-    );
-  }
-}
+    </div>
+  );
+
+  return (
+    <>
+      <div className={styles['search__wrapper']}>
+        <Search />
+        <ErrorButton />
+      </div>
+      {!isLoaded && <Loader />}
+      {!error && (
+        <>
+          <div
+            className={
+              activeStyle === 'activeCard'
+                ? `${styles['main-people__row']} ${styles['main-people__row--active']}`
+                : `${styles['main-people__row']}`
+            }
+          >
+            <div className={styles['main-people__left']}>{cardsBlock}</div>
+            <div className={styles['main-people__right']}>
+              <div
+                className={
+                  activeStyle === 'activeCard'
+                    ? `${styles['main-people__right-inner']} ${styles['main-people__inner--active']}`
+                    : `${styles['main-people__right-inner']}`
+                }
+              >
+                <Outlet />
+              </div>
+            </div>
+          </div>
+          <Pagination />
+        </>
+      )}
+      {error && <div className={styles.error}>Nothing found</div>}
+    </>
+  );
+};
+
 export default MainPage;
