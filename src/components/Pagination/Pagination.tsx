@@ -9,14 +9,13 @@ const Pagination = () => {
   const activeStyle = localStorage.getItem('active');
 
   useEffect(() => {
-    fetch(`${BASE_URL}/people/`)
+    fetch(`${BASE_URL}/`)
       .then((res) => res.json())
-      .then((result) => {
-        setItemsCount(result.count);
+      .then((info) => {
+        setItemsCount(info.info.count);
       });
   });
-
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
   const pages = [];
   const pagesCount = Math.ceil(itemsCount / itemsPerPage);
   for (let i = 1; i <= pagesCount; i++) {
@@ -39,8 +38,8 @@ const Pagination = () => {
     <div
       className={
         activeStyle === 'activeCard'
-          ? `${styles.container} ${styles['disabled-pagination']}`
-          : `${styles.container}`
+          ? `container ${styles['disabled-pagination']}`
+          : `container`
       }
     >
       <div className={styles.pagination}>
