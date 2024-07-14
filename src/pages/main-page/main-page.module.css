@@ -1,15 +1,108 @@
 .search__wrapper {
+  display: flex;
+  justify-content: space-between;
   padding: 20px 0;
+  margin-bottom: 20px;
   border-bottom: 1px solid #c8c8c8;
 }
 .people__items {
-  padding: 100px 0;
+  padding: 100px 0 20px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
 }
 .people__nothingfound {
   padding: 100px 0;
   text-align: center;
   font-weight: 700;
+}
+
+.main-people__row {
+  display: flex;
+  justify-content: space-between;
+}
+.main-people__row--active {
+  position: relative;
+  display: flex;
+}
+.main-people__row--active::before {
+  position: absolute;
+  content: '';
+  top: -20px;
+  left: calc(((100vw - 100%) / 2) * -1);
+  width: 100vw;
+  height: calc(100% + 50px);
+  background: rgba(0, 0, 0, 0.2);
+}
+.main-people__row .main-people__right {
+  display: none;
+}
+.main-people__row--active .main-people__right {
+  display: block;
+}
+.main-people__left {
+  width: 100%;
+}
+.main-people__items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+.main-people__row--active .main-people__items {
+  grid-template-columns: repeat(2, 1fr);
+}
+.main-people__row--active .main-people__left {
+  width: 48%;
+}
+.main-people__row--active .main-people__right {
+  width: 48%;
+}
+.main-people__row--active .main-people__wrap {
+  position: sticky;
+  top: 40px;
+  z-index: 2;
+}
+.main-people__inner--active {
+  position: sticky;
+  top: 20px;
+}
+.main-people__wrap {
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.25);
+}
+.main-people__item-wrap {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(100, 100, 100, 0.25);
+  border-radius: 10px;
+}
+.main-people__item-wrap:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 20px rgba(100, 100, 100, 0.9);
+}
+.main-people__item-wrap:hover .main-people__item {
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+.main-people__item-image {
+  display: block;
+}
+.main-people__item-image img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+}
+.main-people__item-title {
+  margin-top: 0;
+}
+.main-people__item-info {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
 }
