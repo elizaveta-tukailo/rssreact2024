@@ -1,0 +1,24 @@
+.page__wrap {
+  background: #ffffff;
+}
+.page__wrap--light {
+  background: #ffffff;
+}
+.page__wrap--dark {
+  background: #616161;
+}
+.darkTheme {
+  background: #616161;
+}
+.lightTheme {
+  background-color: red;
+}
+.lightTheme {
+  background-color: #fff;
+  color: #000;
+}
+
+.darkTheme {
+  background-color: #333;
+  color: #fff;
+}
