@@ -5,12 +5,20 @@ import NotFoundPage from './pages/not-found-page';
 import Layout from './components/Layout';
 import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
+import { ThemeProvider } from './context/ThemeContext';
 
 const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route
+          path="/"
+          element={
+            <ThemeProvider>
+              <Layout />
+            </ThemeProvider>
+          }
+        >
           <Route path="/" element={<MainPage />}>
             <Route path="details/:peopleId" element={<Card />} />
           </Route>
