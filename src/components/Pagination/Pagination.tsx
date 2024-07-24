@@ -1,10 +1,16 @@
-import { useState } from 'react';
 import styles from './pagination.module.css';
 import { NavLink } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
 
-const Pagination = () => {
-  const itemsCount = 862;
-  const [page, setPage] = useState(1);
+interface PaginationProps {
+  totalCount: number;
+  currentPage: number;
+}
+
+const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
+  const { theme } = useTheme();
+
+  const itemsCount = totalCount;
   const activeStyle = localStorage.getItem('active');
 
   const itemsPerPage = 20;
@@ -14,7 +20,6 @@ const Pagination = () => {
     pages.push(i);
   }
 
-  const currentPage = page;
   const maxPagesToShow = 6;
   let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
   let endPage = startPage + maxPagesToShow - 1;
@@ -34,13 +39,12 @@ const Pagination = () => {
           : `container`
       }
     >
-      <div className={styles.pagination}>
+      <div className={`${styles.pagination} ${theme}}`}>
         {paginationsOnPage.map((page) => (
           <NavLink
             to={`/page/${page}`}
             className={({ isActive }) => (isActive ? styles.active : undefined)}
             key={page + 1}
-            onClick={() => setPage(page)}
           >
             {page}
           </NavLink>
