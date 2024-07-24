@@ -8,7 +8,7 @@ type Transform = {
     next: string;
     prev: null;
   };
-  data: ICard[];
+  results: ICard[];
 };
 
 interface GetCharactersQueryParams {
@@ -20,17 +20,17 @@ export const characterApi = createApi({
   reducerPath: 'characterApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api/' }),
   endpoints: (builder) => ({
-    fetchAllCharacters: builder.query<Transform, GetCharactersQueryParams>({
+    getCharacters: builder.query<Transform, GetCharactersQueryParams>({
       query: ({ page, search }) => {
         return search
           ? `character/?page=${page}&name=${search}`
           : `character/?page=${page}`;
       },
     }),
-    getCharacterDetails: builder.query({
-      query: (id) => `character/${id}`,
+    getCharacter: builder.query({
+      query: (id: number) => `character/${id}`,
     }),
   }),
 });
 
-export const { useFetchAllCharactersQuery } = characterApi;
+export const { useGetCharactersQuery, useGetCharacterQuery } = characterApi;
