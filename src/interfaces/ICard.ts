@@ -1,5 +1,5 @@
 interface ICard {
-  id?: number;
+  id: number;
   name: string;
   image: string;
   status?: string;
