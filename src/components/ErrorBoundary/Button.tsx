@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import styles from './error-boundary.module.css';
+import { useTheme } from '../../context/ThemeContext';
 
 const ErrorButton = () => {
   const [hasError, sethasError] = useState(true);
-
+  const { theme } = useTheme();
   const handleErrorSubmit = () => {
     sethasError(false);
   };
@@ -11,7 +12,10 @@ const ErrorButton = () => {
     return (
       <>
         <form onSubmit={handleErrorSubmit}>
-          <button className={styles.error__button} type="submit">
+          <button
+            className={`${styles.error__button} ${styles[theme]}`}
+            type="submit"
+          >
             Error Button
           </button>
         </form>
