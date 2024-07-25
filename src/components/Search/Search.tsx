@@ -2,10 +2,11 @@ import { ChangeEvent } from 'react';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import styles from './search.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
 
 const Search: React.FC = () => {
+  const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
-  const activeStyle = localStorage.getItem('activeCard');
   const navigate = useNavigate();
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -19,13 +20,7 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div
-      className={
-        activeStyle === 'activeCard'
-          ? `${styles['search__form-wrap']} ${styles['search__form-wrap--disabled']}`
-          : `${styles['search__form-wrap']}`
-      }
-    >
+    <div className={`${styles['search__form-wrap']} ${styles[theme]}`}>
       <form className={styles.search__form} onSubmit={handleFormSubmit}>
         <input
           className={styles.search__input}
