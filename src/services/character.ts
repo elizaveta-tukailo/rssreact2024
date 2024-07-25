@@ -18,13 +18,19 @@ interface GetCharactersQueryParams {
 
 export const characterApi = createApi({
   reducerPath: 'characterApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://rickandmortyapi.com/api/character/',
+  }),
   endpoints: (builder) => ({
     getCharacters: builder.query<Transform, GetCharactersQueryParams>({
       query: ({ page, search }) => {
-        return search
-          ? `character/?page=${page}&name=${search}`
-          : `character/?page=${page}`;
+        let pageParams = page ? `?page=${page}` : '?page=1';
+        let searchParams = '';
+        if (search) {
+          pageParams = '';
+          searchParams = `?name=${search.toLocaleLowerCase()}`;
+        }
+        return search ? searchParams : pageParams;
       },
     }),
     getCharacter: builder.query({
