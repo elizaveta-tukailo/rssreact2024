@@ -39,7 +39,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
           : `container`
       }
     >
-      <div className={`${styles.pagination} ${theme}}`}>
+      <div className={`${styles.pagination} ${styles[theme]}`}>
         {paginationsOnPage.map((page) => (
           <NavLink
             to={`/page/${page}`}

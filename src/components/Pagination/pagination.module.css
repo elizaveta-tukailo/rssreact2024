@@ -17,8 +17,18 @@
   background-color: #2c7dfb;
 }
 .pagination a:hover {
+  transition: all .3s ease;
   background-color: #2c7dfb;
   color: #ffffff;
+}
+.pagination.dark a {
+  background-color: #1e1d1d;
+  border-color: #1e1d1d;
+  color: #ffffff;
+}
+.pagination.dark a:hover,
+.pagination.dark a.active:hover {
+  opacity: 0.5;
 }
 .disabled-pagination {
   pointer-events: none;
