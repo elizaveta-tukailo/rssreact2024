@@ -1,4 +1,5 @@
 .page__wrap {
+  padding-bottom: 100px;
   background: #ffffff;
 }
 .page__wrap--light {
@@ -17,7 +18,6 @@
   background-color: #fff;
   color: #000;
 }
-
 .darkTheme {
   background-color: #333;
   color: #fff;
