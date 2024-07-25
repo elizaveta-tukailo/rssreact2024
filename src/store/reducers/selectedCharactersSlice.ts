@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import ICard from '../../interfaces/ICard';
 
 interface SelectedCharactersState {
@@ -13,7 +13,7 @@ const selectedCharactersSlice = createSlice({
   name: 'selectedCharacters',
   initialState,
   reducers: {
-    toggleCharacter: (state, action: PayloadAction<ICard>) => {
+    toggleCharacter: (state, action) => {
       const character = action.payload;
       const existingIndex = state.selectedCharacters.findIndex(
         (i) => i.id === character.id
