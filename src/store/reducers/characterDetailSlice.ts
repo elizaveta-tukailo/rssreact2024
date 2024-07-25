@@ -13,7 +13,7 @@ const characterDetailSlice = createSlice({
       state.characterId = action.payload.characterId || 0;
     },
     setCharacterData(state, action) {
-      state.characterData = action.payload.characterData;
+      state.characterData = action.payload;
     },
   },
 });
