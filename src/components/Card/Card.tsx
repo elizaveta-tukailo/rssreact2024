@@ -1,17 +1,22 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ICard from '../../interfaces/ICard';
 import styles from './card.module.css';
 import Loader from '../Loader';
 import { BASE_URL } from '../../common/constants';
+import { useDispatch } from 'react-redux';
+import {
+  setCharacterData,
+  setIsClosed,
+} from '../../store/reducers/characterDetailSlice';
 
 const Card = () => {
+  const dispatch = useDispatch();
   const { peopleId } = useParams();
   const [card, setCard] = useState<ICard | null>(null);
-  const navigate = useNavigate();
   const clickCloseModal = () => {
-    navigate(-1);
-    localStorage.setItem('active', '');
+    dispatch(setIsClosed({ isClosed: true, characterId: 0 }));
+    dispatch(setCharacterData([]));
   };
   const cardInfo = {
     item: card,
