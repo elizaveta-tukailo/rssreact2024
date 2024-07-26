@@ -7,28 +7,58 @@ import Card from './components/Card';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ThemeProvider } from './context/ThemeContext';
 
+interface RouteType {
+  path: string;
+  element: React.ReactNode;
+  children?: RouteType[];
+}
+
+interface RenderRoutesProps {
+  routes: RouteType[];
+}
+
+const routes: RouteType[] = [
+  {
+    path: '/',
+    element: (
+      <ThemeProvider>
+        <Layout />
+      </ThemeProvider>
+    ),
+    children: [
+      {
+        path: '/',
+        element: <MainPage />,
+        children: [{ path: 'details/:peopleId', element: <Card /> }],
+      },
+      {
+        path: 'page/:id',
+        element: <MainPage />,
+        children: [{ path: 'details/:peopleId', element: <Card /> }],
+      },
+      { path: '*', element: <NotFoundPage /> },
+    ],
+  },
+];
+
+const renderRoutes: React.FC<RenderRoutesProps> = ({ routes }) => {
+  return (
+    <>
+      {routes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element}>
+          {route.children && renderRoutes({ routes: route.children })}
+        </Route>
+      ))}
+    </>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <ErrorBoundary>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ThemeProvider>
-              <Layout />
-            </ThemeProvider>
-          }
-        >
-          <Route path="/" element={<MainPage />}>
-            <Route path="details/:peopleId" element={<Card />} />
-          </Route>
-          <Route path="page/:id" element={<MainPage />}>
-            <Route path="details/:peopleId" element={<Card />} />
-          </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
+      <Routes>{renderRoutes({ routes })}</Routes>
     </ErrorBoundary>
   );
 };
+
 export default App;
