@@ -1,5 +1,6 @@
 .selected-items {
     position: fixed;
+    z-index: 2;
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
