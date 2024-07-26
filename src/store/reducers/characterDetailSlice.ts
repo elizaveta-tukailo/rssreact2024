@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const characterDetailSlice = createSlice({
   name: 'characterDetail',
   initialState: {
-    isClosed: false,
+    isClosed: true,
     characterId: 0,
     characterData: { id: 0 },
   },
