@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     theme === 'dark' ? styles['header--dark'] : styles['header--light'];
   return (
     <header className={`${styles['header']} ${themeClass}`}>
-      <div className="container">
+      <div className={styles['container']}>
         <div className={styles['header__row']}>
           <nav className={styles['header__nav']}>
             <NavLink
@@ -21,7 +21,10 @@ const Header: React.FC = () => {
               Home
             </NavLink>
           </nav>
-          <button onClick={toggleTheme}>Toggle Theme</button>
+          <button
+            className={styles['header__theme-btn']}
+            onClick={toggleTheme}
+          ></button>
         </div>
       </div>
     </header>
