@@ -34,7 +34,7 @@ export const characterApi = createApi({
       },
     }),
     getCharacter: builder.query({
-      query: (id: number) => `character/${id}`,
+      query: (id: number) => `${id}`,
     }),
   }),
 });
