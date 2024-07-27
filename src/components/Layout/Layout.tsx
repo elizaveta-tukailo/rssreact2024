@@ -10,7 +10,7 @@ const Layout: React.FC = () => {
   return (
     <div className={`${styles['page__wrap']} ${themeClass}`}>
       <Header />
-      <div className="container">
+      <div className={styles['container']}>
         <Outlet />
       </div>
     </div>
