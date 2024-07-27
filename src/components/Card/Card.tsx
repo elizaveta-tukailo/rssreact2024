@@ -9,8 +9,10 @@ import {
   setCharacterData,
   setIsClosed,
 } from '../../store/reducers/characterDetailSlice';
+import { useTheme } from '../../context/ThemeContext';
 
 const Card = () => {
+  const { theme } = useTheme();
   const dispatch = useDispatch();
   const { peopleId } = useParams();
   const [card, setCard] = useState<ICard | null>(null);
@@ -41,7 +43,7 @@ const Card = () => {
       return <Loader />;
     } else if (card && card.location) {
       return (
-        <div className={styles['cardItemWrap']}>
+        <div className={`${styles['cardItemWrap']} ${styles[theme]}`}>
           <div className={styles['cardItem']}>
             <div className={styles['cardItemId']}>Card ID: {card.id}</div>
             <h3 className={styles['cardItemTitle']}> {card.name} </h3>
