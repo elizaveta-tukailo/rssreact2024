@@ -11,7 +11,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
   const { theme } = useTheme();
 
   const itemsCount = totalCount;
-  const activeStyle = localStorage.getItem('active');
+  const searchQuery = localStorage.getItem('searchQuery');
 
   const itemsPerPage = 20;
   const pages = [];
@@ -31,18 +31,14 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
 
   const paginationsOnPage = pages.slice(startPage - 1, endPage);
 
+  const searchParams = searchQuery ? `?search=${searchQuery}` : '';
+
   return (
-    <div
-      className={
-        activeStyle === 'activeCard'
-          ? `container ${styles['disabledPagination']}`
-          : `container`
-      }
-    >
+    <div className="container">
       <div className={`${styles.pagination} ${styles[theme]}`}>
         {paginationsOnPage.map((page) => (
           <NavLink
-            to={`/page/${page}`}
+            to={`/page/${page}${searchParams}`}
             className={({ isActive }) => (isActive ? styles.active : undefined)}
             key={page + 1}
           >
