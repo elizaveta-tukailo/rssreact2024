@@ -92,20 +92,17 @@ const MainPage: React.FC = () => {
   }, [data.results, selectedCharacters.selectedCharacters]);
 
   const cardsBlock = (
-    <div className={styles['main-people__wrap']}>
+    <div className={styles['mainPeopleWrap']}>
       <div
-        className={`${styles['main-people__items']} ${styles[theme]}`}
+        className={`${styles['mainPeopleItems']} ${styles[theme]}`}
         onClick={(e) => closeCardDetail(e)}
         id="people-items"
       >
         {cards.map((item: ICard) => {
           return (
-            <div
-              className={`${styles['main-people__item-wrap']}`}
-              key={item.id}
-            >
+            <div className={`${styles['mainPeopleItemWrap']}`} key={item.id}>
               <input
-                className={styles['main-people__item-checkbox']}
+                className={styles['mainPeopleItemCheckbox']}
                 type="checkbox"
                 name={item.id.toString()}
                 checked={selectedItems.includes(item.id)}
@@ -116,12 +113,12 @@ const MainPage: React.FC = () => {
                 id={String(item.id)}
                 onClick={handleCardClick}
               >
-                <div className={styles['main-people__item']}>
+                <div className={styles['mainPeopleItem']}>
                   <div
                     className={
                       characterDetail.isClosed === false
-                        ? `${styles['main-people__item-image']} ${styles['main-people__item-image--disabled']}`
-                        : `${styles['main-people__item-image']}`
+                        ? `${styles['mainPeopleItemImage']} ${styles['mainPeopleItemImageDisabled']}`
+                        : `${styles['mainPeopleItemImage']}`
                     }
                   >
                     <img
@@ -132,12 +129,10 @@ const MainPage: React.FC = () => {
                     />
                   </div>
                 </div>
-                <div className={styles['main-people__item-info']}>
-                  <h3 className={styles['main-people__item-title']}>
-                    {item.name}
-                  </h3>
+                <div className={styles['mainPeopleItemInfo']}>
+                  <h3 className={styles['mainPeopleItemTitle']}>{item.name}</h3>
                   {item.gender && (
-                    <div className={styles['info__item']}>{item.gender}</div>
+                    <div className={styles['infoItem']}>{item.gender}</div>
                   )}
                 </div>
               </NavLink>
@@ -151,17 +146,17 @@ const MainPage: React.FC = () => {
 
   const setCardRowStyle = (): string => {
     return characterDetail.isClosed === false
-      ? `${styles['main-people__row']} ${styles['main-people__row--active']}`
-      : `${styles['main-people__row']}`;
+      ? `${styles['mainPeopleRow']} ${styles['mainPeopleRowActive']}`
+      : `${styles['mainPeopleRow']}`;
   };
   const setCardRightStyle = () => {
     return characterDetail.isClosed === false
-      ? `${styles['main-people__right-inner']} ${styles['main-people__inner--active']}`
-      : `${styles['main-people__right-inner']}`;
+      ? `${styles['mainPeopleRightInner']} ${styles['mainPeopleInnerActive']}`
+      : `${styles['mainPeopleRightInner']}`;
   };
   return (
     <>
-      <div className={`${styles['search__wrapper']} ${styles[theme]}`}>
+      <div className={`${styles['searchWrapper']} ${styles[theme]}`}>
         <Search />
         <ErrorButton />
       </div>
@@ -169,8 +164,8 @@ const MainPage: React.FC = () => {
       {!error ? (
         <>
           <div className={setCardRowStyle()}>
-            <div className={styles['main-people__left']}>{cardsBlock}</div>
-            <div className={styles['main-people__right']}>
+            <div className={styles['mainPeopleLeft']}>{cardsBlock}</div>
+            <div className={styles['mainPeopleRight']}>
               <div className={setCardRightStyle()}>
                 <Outlet />
               </div>

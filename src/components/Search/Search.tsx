@@ -20,17 +20,17 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div className={`${styles['search__form-wrap']} ${styles[theme]}`}>
-      <form className={styles.search__form} onSubmit={handleFormSubmit}>
+    <div className={`${styles['searchFormWrap']} ${styles[theme]}`}>
+      <form className={styles.searchForm} onSubmit={handleFormSubmit}>
         <input
-          className={styles.search__input}
+          className={styles.searchInput}
           type="text"
           name="name"
           value={searchQuery}
           placeholder="Type here"
           onChange={handleChange}
         />
-        <button className={styles.search__button} type="submit">
+        <button className={styles.searchButton} type="submit">
           Search
         </button>
       </form>

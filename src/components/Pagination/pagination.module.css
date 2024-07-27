@@ -30,7 +30,7 @@
 .pagination.dark a.active:hover {
   opacity: 0.5;
 }
-.disabled-pagination {
+.disabledPagination {
   pointer-events: none;
 }
 .item:hover {

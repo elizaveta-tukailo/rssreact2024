@@ -35,7 +35,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
     <div
       className={
         activeStyle === 'activeCard'
-          ? `container ${styles['disabled-pagination']}`
+          ? `container ${styles['disabledPagination']}`
           : `container`
       }
     >

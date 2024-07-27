@@ -1,9 +1,9 @@
 
-.search__form {
+.searchForm {
   display: flex;
   justify-content: center;
 }
-.search__input {
+.searchInput {
   display: block;
   max-width: 400px;
   margin-right: 5px;
@@ -18,12 +18,12 @@
   letter-spacing: -3%;
   text-align: left;
 }
-.dark .search__input { 
+.dark .searchInput { 
   background-color: #1e1d1d;
   color: #ffffff;
   border-color: #1e1d1d;
 }
-.search__button {
+.searchButton {
   padding: 0 20px;
   cursor: pointer;
   border-radius: 5px;
@@ -40,16 +40,16 @@
   background: rgb(58, 202, 149);
   border: 1px solid aqua;
 }
-.search__button:hover {
+.searchButton:hover {
   background-color: #000000;
   border-color: #000000;
 }
-.search__form-wrap.dark .search__button {
+.searchFormWrap.dark .searchButton {
   background-color: #1e1d1d;
   transition: all .3s ease;
   border-color: #1e1d1d;
 }
-.search__form-wrap.dark .search__button:hover {
+.searchFormWrap.dark .searchButton:hover {
   background-color: #616161;
   color: #fff;
 }

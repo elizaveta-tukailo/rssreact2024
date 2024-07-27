@@ -6,23 +6,23 @@ import { useTheme } from '../../context/ThemeContext';
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const themeClass =
-    theme === 'dark' ? styles['header--dark'] : styles['header--light'];
+    theme === 'dark' ? styles['headerDark'] : styles['headerLight'];
   return (
     <header className={`${styles['header']} ${themeClass}`}>
       <div className={styles['container']}>
-        <div className={styles['header__row']}>
-          <nav className={styles['header__nav']}>
+        <div className={styles['headerRow']}>
+          <nav className={styles['headerNav']}>
             <NavLink
               to={PathesEnum.home}
               className={({ isActive }) =>
-                isActive ? styles['link-active'] : styles['link']
+                isActive ? styles['linkActive'] : styles['link']
               }
             >
               Home
             </NavLink>
           </nav>
           <button
-            className={styles['header__theme-btn']}
+            className={styles['headerThemeBtn']}
             onClick={toggleTheme}
           ></button>
         </div>

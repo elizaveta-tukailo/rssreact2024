@@ -6,9 +6,9 @@ import styles from './layout.module.css';
 const Layout: React.FC = () => {
   const { theme } = useTheme();
   const themeClass =
-    theme === 'dark' ? styles['page__wrap--dark'] : styles['page__wrap--light'];
+    theme === 'dark' ? styles['pageWrapDark'] : styles['pageWrapLight'];
   return (
-    <div className={`${styles['page__wrap']} ${themeClass}`}>
+    <div className={`${styles['pageWrap']} ${themeClass}`}>
       <Header />
       <div className={styles['container']}>
         <Outlet />
