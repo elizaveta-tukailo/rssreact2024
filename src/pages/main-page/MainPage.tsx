@@ -176,8 +176,9 @@ const MainPage: React.FC = () => {
             <SelectedCards />
           ) : null}
         </>
-      ) : null}
-      {error ? <div className={styles.error}>Error</div> : null}
+      ) : (
+        <div className={styles.error}>Error</div>
+      )}
     </>
   );
 };
