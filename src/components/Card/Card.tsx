@@ -41,30 +41,30 @@ const Card = () => {
       return <Loader />;
     } else if (card && card.location) {
       return (
-        <div className={styles['card__item-wrap']}>
-          <div className={styles['card__item']}>
-            <div className={styles['card__item-id']}>Card ID: {card.id}</div>
-            <h3 className={styles['card__item-title']}> {card.name} </h3>
+        <div className={styles['cardItemWrap']}>
+          <div className={styles['cardItem']}>
+            <div className={styles['cardItemId']}>Card ID: {card.id}</div>
+            <h3 className={styles['cardItemTitle']}> {card.name} </h3>
             <button
-              className={styles['card__item-btn']}
+              className={styles['cardItemBtn']}
               onClick={clickCloseModal}
             ></button>
           </div>
-          <div className={styles['card__item-row']}>
-            <div className={styles['card__item-image']}>
+          <div className={styles['cardItemRow']}>
+            <div className={styles['cardItemImage']}>
               <img src={card.image}></img>
             </div>
-            <div className={styles['card__item-info']}>
-              <div className={styles['card__item-info-item']}>
+            <div className={styles['cardItemInfo']}>
+              <div className={styles['cardItemInfoItem']}>
                 <span>Species:</span> {card.species}
               </div>
-              <div className={styles['card__item-info-item']}>
+              <div className={styles['cardItemInfoItem']}>
                 <span>Status:</span> {card.status}
               </div>
-              <div className={styles['card__item-info-item']}>
+              <div className={styles['cardItemInfoItem']}>
                 <span> Gender:</span> {card.gender}
               </div>
-              <div className={styles['card__item-info-item']}>
+              <div className={styles['cardItemInfoItem']}>
                 <span>Planet:</span> {card.location.name}
               </div>
             </div>
