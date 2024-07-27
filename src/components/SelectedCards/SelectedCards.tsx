@@ -1,8 +1,9 @@
 import { useTheme } from '../../context/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from '../../interfaces/IStore';
-import './selected-cards.css';
+import styles from './selected-cards.module.css';
 import { unselectAll } from '../../store/reducers/selectedCharactersSlice';
+import { toCapitalize } from '../../utils/toCapitalize';
 
 const SelectedCards = () => {
   const fileData = ['id;name;status;type;gender', '\n'];
@@ -30,21 +31,23 @@ const SelectedCards = () => {
   const blob = new Blob([...fileData], { type: 'text/csv;charset=utf-8' });
 
   return (
-    <div className={`selected-items selected-items--${theme}`}>
-      <div className={`selected-items__inner`}>
-        <div className={`selected-items__count`}>
+    <div
+      className={`${styles.selectedItems} ${styles[`selectedItems${toCapitalize(theme)}`]}`}
+    >
+      <div className={styles.selectedItemsInner}>
+        <div className={styles.selectedItemsCount}>
           Quantity of selected items: <span>{selectedCharacters.length}</span>
         </div>
-        <div className={`selected-items__buttons`}>
+        <div className={styles.selectedItemsButtons}>
           <button
-            className={`selected-items__button`}
+            className={styles.selectedItemsButton}
             onClick={handleUnselectCards}
           >
-            Unselected all
+            Unselect all
           </button>
           <a
             href={window.URL.createObjectURL(blob)}
-            className={`selected-items__button`}
+            className={styles.selectedItemsButton}
             download={`${selectedCharacters.length}_characters`}
           >
             Download
