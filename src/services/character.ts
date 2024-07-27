@@ -1,15 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type ICard from '../interfaces/ICard';
 
-type Transform = {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: null;
-  };
+interface Info {
+  count: number;
+  pages: number;
+  next: string;
+  prev: null;
+}
+
+interface Transform {
+  info: Info;
   results: ICard[];
-};
+}
 
 interface GetCharactersQueryParams {
   page: number;
@@ -24,13 +26,18 @@ export const characterApi = createApi({
   endpoints: (builder) => ({
     getCharacters: builder.query<Transform, GetCharactersQueryParams>({
       query: ({ page, search }) => {
-        let pageParams = page ? `?page=${page}` : '?page=1';
-        let searchParams = '';
+        const params = [];
         if (search) {
-          pageParams = '';
-          searchParams = `?name=${search.toLocaleLowerCase()}`;
+          params.push(`name=${encodeURIComponent(search)}`);
         }
-        return search ? searchParams : pageParams;
+        if (page) {
+          params.push(`page=${page}`);
+        }
+        if (params.length > 0) {
+          return '?' + params.join('&');
+        } else {
+          return '';
+        }
       },
     }),
     getCharacter: builder.query({
