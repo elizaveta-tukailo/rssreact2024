@@ -8,6 +8,8 @@ import {
 } from '../../store/reducers/characterDetailSlice';
 import { useTheme } from '../../context/ThemeContext';
 import { useGetCharacterQuery } from '../../services/character';
+import { useEffect } from 'react';
+import { setPageCharacters } from '../../store/reducers/pageCharactersSlice';
 
 const Card = () => {
   const { theme } = useTheme();
@@ -18,6 +20,13 @@ const Card = () => {
     error,
     isFetching,
   } = useGetCharacterQuery(Number(peopleId));
+
+  useEffect(() => {
+    if (character) {
+      dispatch(setPageCharacters(character));
+      dispatch(setIsClosed({ isClosed: false, characterId: character.id }));
+    }
+  }, [dispatch, character]);
 
   const clickCloseModal = () => {
     dispatch(setIsClosed({ isClosed: true, characterId: 0 }));
