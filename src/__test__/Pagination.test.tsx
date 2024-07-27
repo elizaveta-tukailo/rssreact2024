@@ -4,17 +4,20 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Pagination from '../components/Pagination/Pagination';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '../context/ThemeContext';
 
 describe('Pagination test', () => {
   it('The URL changes when the page changes', async () => {
     render(
       <BrowserRouter>
-        <Pagination />
+        <ThemeProvider>
+          <Pagination totalCount={80} currentPage={1} />
+        </ThemeProvider>
       </BrowserRouter>
     );
-    expect(screen.getByText('6'));
+    expect(screen.getByText('4'));
     await waitFor(() => {
-      userEvent.click(screen.getByText('6'));
+      userEvent.click(screen.getByText('4'));
       expect(window.location.search).toBe('');
     });
   });
