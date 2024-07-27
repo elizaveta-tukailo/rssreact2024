@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination test Pagination component renders correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="pagination light"
+  >
+    <a
+      href="/page/1"
+      onClick={[Function]}
+    >
+      1
+    </a>
+    <a
+      href="/page/2"
+      onClick={[Function]}
+    >
+      2
+    </a>
+    <a
+      href="/page/3"
+      onClick={[Function]}
+    >
+      3
+    </a>
+    <a
+      href="/page/4"
+      onClick={[Function]}
+    >
+      4
+    </a>
+  </div>
+</div>
+`;

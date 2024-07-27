@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search Card component renders correctly 1`] = `
+<div
+  className="searchFormWrap light"
+>
+  <form
+    className="searchForm"
+    onSubmit={[Function]}
+  >
+    <input
+      className="searchInput"
+      name="name"
+      onChange={[Function]}
+      placeholder="Type here"
+      type="text"
+      value=""
+    />
+    <button
+      className="searchButton"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+</div>
+`;
+
+exports[`Search Search component renders correctly 1`] = `
+<div
+  className="searchFormWrap light"
+>
+  <form
+    className="searchForm"
+    onSubmit={[Function]}
+  >
+    <input
+      className="searchInput"
+      name="name"
+      onChange={[Function]}
+      placeholder="Type here"
+      type="text"
+      value=""
+    />
+    <button
+      className="searchButton"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+</div>
+`;
