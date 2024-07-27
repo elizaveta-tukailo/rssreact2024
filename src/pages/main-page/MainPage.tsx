@@ -94,7 +94,7 @@ const MainPage: React.FC = () => {
   const cardsBlock = (
     <div className={styles['main-people__wrap']}>
       <div
-        className={styles['main-people__items']}
+        className={`${styles['main-people__items']} ${styles[theme]}`}
         onClick={(e) => closeCardDetail(e)}
         id="people-items"
       >
