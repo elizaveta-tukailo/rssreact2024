@@ -38,10 +38,17 @@ const Card = () => {
   }
   return (
     <>
-      {isFetching ? <Loader /> : null}
+      {isFetching ? (
+        <div data-testid="loader">
+          <Loader />
+        </div>
+      ) : null}
       {!error ? (
         <>
-          <div className={`${styles['cardItemWrap']} ${styles[theme]}`}>
+          <div
+            className={`${styles['cardItemWrap']} ${styles[theme]}`}
+            data-testid="detail-card"
+          >
             <div className={styles['cardItem']}>
               <div className={styles['cardItemId']}>
                 Card ID: {character.id}
