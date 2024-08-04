@@ -6,6 +6,7 @@ module.exports = {
     'prettier',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
+    'next/core-web-vitals',
   ],
   env: {
     browser: true,
@@ -21,7 +22,13 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react', 'prettier', 'react-hooks',"react-compiler"],
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'prettier',
+    'react-hooks',
+    'react-compiler',
+  ],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
@@ -39,7 +46,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
-    "react-compiler/react-compiler": "error"
+    'react-compiler/react-compiler': 'error',
   },
   settings: {
     react: {
