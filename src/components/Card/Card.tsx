@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import styles from './card.module.css';
 import Loader from '../Loader';
 import { useDispatch } from 'react-redux';
@@ -10,16 +9,18 @@ import { useTheme } from '../../context/ThemeContext';
 import { useGetCharacterQuery } from '../../services/character';
 import { useEffect } from 'react';
 import { setPageCharacters } from '../../store/reducers/pageCharactersSlice';
+import { useRouter } from 'next/router';
 
 const Card = () => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const { peopleId } = useParams();
+  const router = useRouter();
+  const { details } = router.query;
   const {
     data: character,
     error,
     isFetching,
-  } = useGetCharacterQuery(Number(peopleId));
+  } = useGetCharacterQuery(Number(details));
 
   useEffect(() => {
     if (character) {
