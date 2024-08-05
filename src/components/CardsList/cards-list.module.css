@@ -1,65 +1,63 @@
 .mainPeopleItems {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 20px;
-  }
-  .mainPeopleItems.dark .mainPeopleItemWrap {
-    background-color: #1e1d1d;
-  }
-  
-  .mainPeopleItems.dark .mainPeopleItemTitle,
-  .mainPeopleItems.dark a {
-    color: #e7e7e7;
-  }
-  .mainPeopleRowActive .mainPeopleItems {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .mainPeopleWrap {
-    position: relative;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(100, 100, 100, 0.25);
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+}
+.mainPeopleItems.dark .mainPeopleItemWrap {
+  background-color: #1e1d1d;
+}
+
+.mainPeopleItems.dark .mainPeopleItemTitle,
+.mainPeopleItems.dark a {
+  color: #e7e7e7;
+}
+.mainPeopleRowActive .mainPeopleItems {
+  grid-template-columns: repeat(4, 1fr);
+}
+.mainPeopleWrap {
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.25);
+}
 
 .mainPeopleItemWrap {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: #ffffff;
-    box-shadow: 0px 0px 20px rgba(100, 100, 100, 0.25);
-    border-radius: 10px;
-  }
-  .mainPeopleItemWrap a {
-    text-decoration: none;
-  }
-  .mainPeopleItemWrap:hover {
-    cursor: pointer;
-    box-shadow: 0px 0px 20px rgba(100, 100, 100, 0.9);
-  }
-  .mainPeopleItemWrap:hover .mainPeopleItem {
-    transition: all 0.3s ease;
-    opacity: 0.5;
-  }
-  .mainPeopleItemSelect {
-    margin: 20px 16px;
-  }
-  .mainPeopleItemImage {
-    display: block;
-  }
-  .mainPeopleItemImage img {
-    width: 100%;
-    max-height: 250px;
-    object-fit: cover;
-  }
-  .mainPeopleItemTitle {
-    margin-top: 0;
-  }
-  .mainPeopleItemInfo {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 16px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(100, 100, 100, 0.25);
+  border-radius: 10px;
+}
+.mainPeopleItemWrap a {
+  text-decoration: none;
+}
+.mainPeopleItemWrap:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 20px rgba(100, 100, 100, 0.9);
+}
+.mainPeopleItemWrap:hover .mainPeopleItem {
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+.mainPeopleItemSelect {
+  margin: 20px 16px;
+}
+.mainPeopleItemImage {
+  display: block;
+}
+.mainPeopleItemImage img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+}
+.mainPeopleItemTitle {
+  margin-top: 0;
+}
+.mainPeopleItemInfo {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+}
