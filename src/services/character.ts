@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type ICard from '../interfaces/ICard';
-import type { Action, PayloadAction } from '@reduxjs/toolkit'
+import type { Action, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
 interface Info {
@@ -14,7 +14,7 @@ interface Transform {
   info: Info;
   results: ICard[];
 }
-type RootState = any
+type RootState = any;
 
 interface GetCharactersQueryParams {
   page: number;
@@ -22,7 +22,7 @@ interface GetCharactersQueryParams {
 }
 
 function isHydrateAction(action: Action): action is PayloadAction<RootState> {
-  return action.type === HYDRATE
+  return action.type === HYDRATE;
 }
 
 export const characterApi = createApi({
@@ -32,7 +32,7 @@ export const characterApi = createApi({
   }),
   extractRehydrationInfo(action, { reducerPath }): any {
     if (isHydrateAction(action)) {
-      return action.payload[reducerPath]
+      return action.payload[reducerPath];
     }
   },
   endpoints: (builder) => ({
@@ -58,6 +58,8 @@ export const characterApi = createApi({
   }),
 });
 
-export const { useGetCharactersQuery, useGetCharacterQuery,
+export const {
+  useGetCharactersQuery,
+  useGetCharacterQuery,
   util: { getRunningQueriesThunk },
- } = characterApi;
+} = characterApi;
