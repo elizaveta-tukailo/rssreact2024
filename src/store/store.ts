@@ -7,7 +7,6 @@ import pageCharactersReducer from './reducers/pageCharactersSlice';
 import currentPageReducer from './reducers/currentPageSlice';
 import { createWrapper } from 'next-redux-wrapper';
 
-
 export const setupStore = () => {
   return configureStore({
     reducer: {
@@ -24,6 +23,6 @@ export const setupStore = () => {
 
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
-
+export type RootState = ReturnType<AppStore['getState']>;
 export const wrapper = createWrapper(setupStore);
 export default setupStore;
