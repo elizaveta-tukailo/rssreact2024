@@ -1,0 +1,72 @@
+.searchWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #c8c8c8;
+}
+.peopleItems {
+  padding: 100px 0 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px;
+}
+.peopleNothingfound {
+  padding: 100px 0;
+  text-align: center;
+  font-weight: 700;
+}
+.mainPeopleRow {
+  display: flex;
+  justify-content: space-between;
+}
+.mainPeopleRowActive {
+  position: relative;
+  display: flex;
+}
+.mainPeopleRow .mainPeopleRight {
+  display: none;
+}
+.mainPeopleRowActive .mainPeopleRight {
+  display: block;
+}
+.mainPeopleLeft {
+  width: 100%;
+}
+.mainPeopleItems {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+}
+.mainPeopleItems.dark .mainPeopleItemWrap {
+  background-color: #1e1d1d;
+}
+
+.mainPeopleItems.dark .mainPeopleItemTitle,
+.mainPeopleItems.dark a {
+  color: #e7e7e7;
+}
+.mainPeopleRowActive .mainPeopleItems {
+  grid-template-columns: repeat(4, 1fr);
+}
+.mainPeopleRowActive .mainPeopleLeft {
+  width: 49%;
+}
+.mainPeopleRowActive .mainPeopleRight {
+  width: 49%;
+}
+.mainPeopleRowActive .mainPeopleWrap {
+  position: sticky;
+  top: 40px;
+  z-index: 2;
+}
+.mainPeopleInnerActive {
+  position: sticky;
+  top: 20px;
+}
+.mainPeopleWrap {
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.25);
+}
