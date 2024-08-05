@@ -33,22 +33,7 @@
 .mainPeopleLeft {
   width: 100%;
 }
-.mainPeopleItems {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 20px;
-}
-.mainPeopleItems.dark .mainPeopleItemWrap {
-  background-color: #1e1d1d;
-}
 
-.mainPeopleItems.dark .mainPeopleItemTitle,
-.mainPeopleItems.dark a {
-  color: #e7e7e7;
-}
-.mainPeopleRowActive .mainPeopleItems {
-  grid-template-columns: repeat(4, 1fr);
-}
 .mainPeopleRowActive .mainPeopleLeft {
   width: 49%;
 }
@@ -63,10 +48,4 @@
 .mainPeopleInnerActive {
   position: sticky;
   top: 20px;
-}
-.mainPeopleWrap {
-  position: relative;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(100, 100, 100, 0.25);
 }
