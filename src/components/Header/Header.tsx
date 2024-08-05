@@ -1,7 +1,6 @@
-import { NavLink } from 'react-router-dom';
 import styles from './header.module.css';
-import PathesEnum from '../../common/enums/pathes';
 import { useTheme } from '../../context/ThemeContext';
+import Link from 'next/link';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -12,14 +11,9 @@ const Header: React.FC = () => {
       <div className={styles['container']}>
         <div className={styles['headerRow']}>
           <nav className={styles['headerNav']}>
-            <NavLink
-              to={PathesEnum.home}
-              className={({ isActive }) =>
-                isActive ? styles['linkActive'] : styles['link']
-              }
-            >
+            <Link href="/" className={styles['link']}>
               Home
-            </NavLink>
+            </Link>
           </nav>
           <button
             className={styles['headerThemeBtn']}
