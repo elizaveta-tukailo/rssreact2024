@@ -1,10 +1,10 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import { wrapper } from '../store/store';
 import { ThemeProvider } from '../context/ThemeContext';
-import Layout from '../components/Layout';
+import Layout from '../components/Layout/Layout';
 
 export function App({ Component, pageProps }: AppProps) {
   const { store } = wrapper.useWrappedStore(pageProps);
