@@ -14,15 +14,21 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noImplicitAny": true,
     "noEmit": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ],
+      "@/components/*": [
+        "components/*"
+      ]
     },
     "plugins": [
       {
@@ -30,15 +36,23 @@
       }
     ]
   },
+  // "include": [
+  //   "./src",
+  //   "./dist/types/**/*.ts",
+  //   "./next-env.d.ts",
+  //   ".next/types/**/*.ts",
+  //   "**/*.ts",
+  //   "**/*.tsx",
+  //   "**/**/*.ts",
+  //   "**/**/*.tsx"
+  // ],
   "include": [
-    "./src",
-    "./dist/types/**/*.ts",
-    "./next-env.d.ts",
-    ".next/types/**/*.ts",
+    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/**/*.ts",
-    "**/**/*.tsx"
+    "jest.config.ts",
+    "jest.setup.ts",
+    "./dist/types/**/*.ts"
   ],
   "exclude": [
     "./node_modules"
