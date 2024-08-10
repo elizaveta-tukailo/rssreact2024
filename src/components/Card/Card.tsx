@@ -1,5 +1,5 @@
 import styles from './card.module.css';
-import Loader from '../Loader';
+import Loader from '../Loader/Loader';
 import { useDispatch } from 'react-redux';
 import {
   setCharacterData,
