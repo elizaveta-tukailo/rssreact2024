@@ -16,6 +16,7 @@ const Header: React.FC = () => {
             </Link>
           </nav>
           <button
+            data-testid="theme-btn"
             className={styles['headerThemeBtn']}
             onClick={toggleTheme}
           ></button>
