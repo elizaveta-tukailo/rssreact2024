@@ -1,5 +1,5 @@
 import { useTheme } from '../../context/ThemeContext';
-import Header from '../Header';
+import Header from '../Header/Header';
 import styles from './layout.module.css';
 
 interface LayoutProps {
