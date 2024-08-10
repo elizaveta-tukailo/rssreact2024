@@ -3,6 +3,7 @@ import styles from './loader.module.css';
 export default function Loader() {
   return (
     <svg
+      test-id="loader-img"
       className={styles.loader}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 100 100"
