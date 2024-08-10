@@ -31,15 +31,17 @@ const SelectedCards = () => {
   const blob = new Blob([...fileData], { type: 'text/csv;charset=utf-8' });
 
   const createUrl = () => {
-    if (typeof window !== 'undefined' &&
+    if (
+      typeof window !== 'undefined' &&
       typeof window.URL !== 'undefined' &&
       typeof window.URL.createObjectURL === 'function' &&
-      blob instanceof Blob) {
+      blob instanceof Blob
+    ) {
       return String(window.URL.createObjectURL(blob));
-      } else {
-        return "";
-      }
-  }
+    } else {
+      return '';
+    }
+  };
   return (
     <div
       className={`${styles.selectedItems} ${styles[`selectedItems${toCapitalize(theme)}`]}`}
