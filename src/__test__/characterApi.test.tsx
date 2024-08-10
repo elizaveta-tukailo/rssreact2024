@@ -1,40 +1,96 @@
-import { characterApi } from '../services/character';
-import { configureStore } from '@reduxjs/toolkit';
+import { renderHook, waitFor } from '@testing-library/react';
+import {
+  useGetCharactersQuery,
+  useGetCharacterQuery,
+} from '../services/character';
+import { Provider } from 'react-redux';
+import { ReactNode } from 'react';
+import { setupStore } from '../store/store';
+import fetchMock from 'jest-fetch-mock';
+import { character, characters } from './__mocks__/charactersMockData';
+import 'whatwg-fetch';
 
-const api = characterApi;
+const store = setupStore();
+fetchMock.enableMocks();
 
-const store = configureStore({
-  reducer: {
-    [api.reducerPath]: api.reducer,
-  },
-  middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(api.middleware);
-  },
-});
+function Wrapper(props: { children: ReactNode }) {
+  return <Provider store={store}>{props.children}</Provider>;
+}
 
-describe('characterApi', () => {
+describe('Check character API', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    fetchMock.resetMocks();
   });
 
-  it('fetches characters successfully', async () => {
-    const result = await store.dispatch(
-      api.endpoints.getCharacters.initiate({ page: 1 })
+  test('Check useGetCharactersQuery', async () => {
+    fetchMock.mockOnceIf(`https://rickandmortyapi.com/api/character/`, () =>
+      Promise.resolve({
+        status: 200,
+        body: JSON.stringify(characters),
+      })
     );
 
-    expect(result).toBeDefined();
-    expect(result.data).toBeDefined();
-    expect(Array.isArray(result.data?.results)).toBe(true);
+    const { result } = renderHook(() => useGetCharactersQuery({ page: 1 }), {
+      wrapper: Wrapper,
+    });
+
+    expect(result.current).toMatchObject({
+      status: 'pending',
+      endpointName: 'getCharacters',
+      isLoading: true,
+      isSuccess: false,
+      isError: false,
+      isFetching: true,
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(fetchMock.mock.calls.length).toBe(1);
+
+    expect(result.current).toMatchObject({
+      status: 'fulfilled',
+      endpointName: 'getCharacters',
+      data: characters,
+      isLoading: false,
+      isSuccess: true,
+      isError: false,
+      currentData: {},
+      isFetching: false,
+    });
   });
 
-  it('fetches a single character successfully', async () => {
-    const characterId = 1;
-    const result = await store.dispatch(
-      api.endpoints.getCharacter.initiate(characterId)
+  test('Check useGetCharacterQuery', async () => {
+    fetchMock.mockOnceIf(`https://rickandmortyapi.com/api/character/1`, () =>
+      Promise.resolve({
+        status: 200,
+        body: JSON.stringify(character),
+      })
     );
 
-    expect(result).toBeDefined();
-    expect(result.data).toBeDefined();
-    expect(result.data.id).toBe(characterId);
+    const { result } = renderHook(() => useGetCharacterQuery(1), {
+      wrapper: Wrapper,
+    });
+
+    expect(result.current).toMatchObject({
+      status: 'pending',
+      endpointName: 'getCharacter',
+      isLoading: true,
+      isSuccess: false,
+      isError: false,
+      isFetching: true,
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(fetchMock.mock.calls.length).toBe(1);
+
+    expect(result.current).toMatchObject({
+      status: 'fulfilled',
+      endpointName: 'getCharacter',
+      data: character,
+      isLoading: false,
+      isSuccess: true,
+      isError: false,
+      currentData: character,
+      isFetching: false,
+    });
   });
 });

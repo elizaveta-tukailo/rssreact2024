@@ -1,55 +1,95 @@
-import '@testing-library/jest-dom';
-const { expect, describe, it } = require('@jest/globals');
-import { MemoryRouter } from 'react-router-dom';
-import Card from '../components/Card';
-import { ThemeProvider } from '../context/ThemeContext';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
-import { character } from './__mocks__/charactersMockData';
-import { render, screen } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import Card from '../components/Card/Card';
+import { useGetCharacterQuery } from '../services/character';
+import {
+  setCharacterData,
+  setIsClosed,
+} from '../store/reducers/characterDetailSlice';
+import { useRouter } from 'next/router';
+import { character, characters } from './__mocks__/charactersMockData';
 
-import * as reduxHooks from 'react-redux';
-import { renderWithRouter } from '../testSetup/render-router';
+jest.mock('../services/character');
+jest.mock('../context/ThemeContext', () => ({
+  useTheme: () => ({ theme: 'light' }),
+}));
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
+const mockStore = configureStore([]);
 
-jest.mock('react-redux');
+describe('Card Component', () => {
+  let store = mockStore({});
 
-describe('Testing card component', () => {
-  it('renders loading state', () => {
-    renderWithRouter(<Card />, {
-      route: '/details/1',
+  beforeEach(() => {
+    store = mockStore({
+      characterDetail: {},
+      pageCharacters: characters,
     });
 
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
+    jest.clearAllMocks();
   });
-  it('Match snapshot', () => {
-    jest.spyOn(reduxHooks, 'useSelector').mockReturnValue(character);
 
-    const component = render(
+  test('renders character data correctly', () => {
+    (useRouter as jest.Mock).mockReturnValue({ query: { details: '1' } });
+    const characterData = character;
+    (useGetCharacterQuery as jest.Mock).mockReturnValue({
+      isFetching: false,
+      data: characterData,
+      error: null,
+    });
+
+    render(
       <Provider store={store}>
-        <MemoryRouter initialEntries={[`/details/1`]}>
-          <ThemeProvider>
-            <Card />
-          </ThemeProvider>
-        </MemoryRouter>
+        <Card />
       </Provider>
     );
 
-    expect(component).toMatchSnapshot();
+    expect(screen.getByText('Card ID: 1')).toBeInTheDocument();
+    expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
   });
-  it('Loader should appear while data is fetching', async () => {
-    renderWithRouter(<Card />, {
-      route: '/details/1',
+
+  test('dispatches close modal action on button click', () => {
+    (useRouter as jest.Mock).mockReturnValue({ query: { details: '1' } });
+    const characterData = character;
+    (useGetCharacterQuery as jest.Mock).mockReturnValue({
+      isFetching: false,
+      data: characterData,
+      error: null,
     });
 
-    const loader = await screen.findByTestId('loader');
-    expect(loader).toBeInTheDocument();
+    const dispatchSpy = jest.spyOn(store, 'dispatch');
+
+    render(
+      <Provider store={store}>
+        <Card />
+      </Provider>
+    );
+
+    fireEvent.click(screen.getByRole('button'));
+
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      setIsClosed({ isClosed: true, characterId: 0 })
+    );
+    expect(dispatchSpy).toHaveBeenCalledWith(setCharacterData([]));
   });
-  it('Check if the detailed card component correctly displays the character data;', async () => {
-    renderWithRouter(<Card />, {
-      route: '/details/1',
+
+  test('renders error message when error occurs', () => {
+    (useRouter as jest.Mock).mockReturnValue({ query: { details: '1' } });
+    (useGetCharacterQuery as jest.Mock).mockReturnValue({
+      isFetching: false,
+      data: null,
+      error: true,
     });
 
-    const characterName = await screen.getByText(/Morty/i);
-    expect(characterName).toBeInTheDocument();
+    render(
+      <Provider store={store}>
+        <Card />
+      </Provider>
+    );
+
+    expect(screen.getByText('No data found!')).toBeInTheDocument();
   });
 });
