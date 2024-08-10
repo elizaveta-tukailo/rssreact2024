@@ -1,8 +1,8 @@
 import styles from '../styles/main-page.module.css';
-import Loader from '../components/Loader';
-import Search from '../components/Search';
+import Loader from '../components/Loader/Loader';
+import Search from '../components/Search/Search';
 import ErrorButton from '../components/ErrorBoundary/Button';
-import Pagination from '../components/Pagination';
+import Pagination from '../components/Pagination/Pagination';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -13,12 +13,12 @@ import {
 import IStore from '../interfaces/IStore';
 import { setCurrentPage } from '../store/reducers/currentPageSlice';
 import { useEffect } from 'react';
-import SelectedCards from '../components/SelectedCards';
+import SelectedCards from '../components/SelectedCards/SelectedCards';
 import { useTheme } from '../context/ThemeContext';
 import { wrapper } from '../store/store';
 import { useRouter } from 'next/router';
-import CardsList from '../components/CardsList';
-import Card from '../components/Card';
+import CardsList from '../components/CardsList/CardsList';
+import Card from '../components/Card/Card';
 
 const MainPage: React.FC = () => {
   const { theme } = useTheme();
