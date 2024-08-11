@@ -14,7 +14,7 @@
 .error__button.dark {
   background-color: #1e1d1d;
   color: #ffffff;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   border-color: #1e1d1d;
 }
 .error__button.dark:hover {

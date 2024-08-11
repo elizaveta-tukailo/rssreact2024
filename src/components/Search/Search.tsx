@@ -1,22 +1,39 @@
+'use client';
 import { ChangeEvent } from 'react';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import styles from './search.module.css';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const Search: React.FC = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const details = searchParams!.get('details') || '';
+  const page = searchParams!.get('page') || '1';
   const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
-  const navigate = useNavigate();
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    navigate(`?search=${searchQuery}`);
-    localStorage.setItem('searchQuery', searchQuery);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('searchQuery', searchQuery);
+    }
+    const params = new URLSearchParams({
+      page: page.toString(),
+    });
+    if (searchQuery) {
+      params.append('search', searchQuery);
+    }
+    if (details) {
+      params.append('details', details);
+    }
+    router.push(`/?${params.toString()}`);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+    if (typeof window !== 'undefined') {
+      setSearchQuery(event.target.value);
+    }
   };
 
   return (
@@ -37,4 +54,5 @@ const Search: React.FC = () => {
     </div>
   );
 };
+
 export default Search;

@@ -1,0 +1,6 @@
+.page {
+  background: #ffffff;
+}
+.page.dark {
+  background: grey;
+}

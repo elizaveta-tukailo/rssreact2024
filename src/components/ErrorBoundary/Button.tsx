@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import styles from './error-boundary.module.css';
 import { useTheme } from '../../context/ThemeContext';

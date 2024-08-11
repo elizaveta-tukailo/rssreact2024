@@ -1,6 +1,8 @@
+'use client';
+
 import styles from './pagination.module.css';
-import { NavLink } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   totalCount: number;
@@ -9,10 +11,11 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
   const { theme } = useTheme();
-
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams!.get('search') || '';
+  const details = searchParams!.get('details') || '';
   const itemsCount = totalCount;
-  const searchQuery = localStorage.getItem('searchQuery');
-
   const itemsPerPage = 20;
   const pages = [];
   const pagesCount = Math.ceil(itemsCount / itemsPerPage);
@@ -31,19 +34,39 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
 
   const paginationsOnPage = pages.slice(startPage - 1, endPage);
 
-  const searchParams = searchQuery ? `?search=${searchQuery}` : '';
+  const setActiveClass = (page: string) => {
+    if (currentPage) {
+      return String(currentPage) === page ? styles.active : '';
+    }
+    return '';
+  };
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams({
+      page: page.toString(),
+    });
+    if (searchQuery) {
+      params.append('search', searchQuery);
+    }
+    if (details) {
+      params.append('details', details);
+    }
+    router.push(`/?${params.toString()}`);
+  };
 
   return (
     <div className="container">
       <div className={`${styles.pagination} ${styles[theme]}`}>
         {paginationsOnPage.map((page) => (
-          <NavLink
-            to={`/page/${page}${searchParams}`}
-            className={({ isActive }) => (isActive ? styles.active : undefined)}
-            key={page + 1}
+          <div
+            className={`${styles.paginationItem} ${setActiveClass(String(page))}`}
+            key={page}
+            onClick={() => {
+              handlePageChange(page);
+            }}
           >
             {page}
-          </NavLink>
+          </div>
         ))}
       </div>
     </div>

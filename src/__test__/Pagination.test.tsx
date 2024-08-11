@@ -1,40 +1,31 @@
-import { render, waitFor, screen } from '@testing-library/react';
+import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom';
 import Pagination from '../components/Pagination/Pagination';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '../context/ThemeContext';
-import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { renderWithProviders } from '../utils/renderWithProvider';
+
+const pushMock = jest.fn();
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: pushMock,
+  }),
+  useSearchParams: () => ({
+    get: (key: string) => {
+      const params = new URLSearchParams('page=1& search=rick&details=4');
+      return params.get(key);
+    },
+  }),
+}));
 
 describe('Pagination test', () => {
-  it('The URL changes when the page changes', async () => {
-    render(
-      <BrowserRouter>
-        <ThemeProvider>
-          <Pagination totalCount={80} currentPage={1} />
-        </ThemeProvider>
-      </BrowserRouter>
-    );
+  test('The URL changes when the page changes', async () => {
+    renderWithProviders(<Pagination currentPage={1} totalCount={80} />);
     expect(screen.getByText('4'));
     await waitFor(() => {
       userEvent.click(screen.getByText('4'));
       expect(window.location.search).toBe('');
+      expect(pushMock).toHaveBeenCalledWith(expect.stringContaining('page=4'));
     });
-  });
-  it('Pagination component renders correctly', () => {
-    const tree = renderer
-      .create(
-        <BrowserRouter>
-          <Provider store={store}>
-            <ThemeProvider>
-              <Pagination totalCount={80} currentPage={1} />
-            </ThemeProvider>
-          </Provider>
-        </BrowserRouter>
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
   });
 });

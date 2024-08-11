@@ -1,55 +1,33 @@
-import '@testing-library/jest-dom';
-const { expect, describe, it } = require('@jest/globals');
-import { MemoryRouter } from 'react-router-dom';
-import Card from '../components/Card';
-import { ThemeProvider } from '../context/ThemeContext';
-import { Provider } from 'react-redux';
-import { store } from '../store/store';
-import { character } from './__mocks__/charactersMockData';
-import { render, screen } from '@testing-library/react';
+import 'whatwg-fetch';
+import Card from '../components/Card/Card';
+import { cleanup, screen } from '@testing-library/react';
+import { renderWithProviders } from '../utils/renderWithProvider';
 
-import * as reduxHooks from 'react-redux';
-import { renderWithRouter } from '../testSetup/render-router';
+jest.mock('../components/CloseCard/CloseCard', () => () => <div>Close</div>);
 
-jest.mock('react-redux');
-
-describe('Testing card component', () => {
-  it('renders loading state', () => {
-    renderWithRouter(<Card />, {
-      route: '/details/1',
-    });
-
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
+describe('Testing Card Component', () => {
+  afterAll(() => {
+    jest.clearAllMocks();
   });
-  it('Match snapshot', () => {
-    jest.spyOn(reduxHooks, 'useSelector').mockReturnValue(character);
 
-    const component = render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={[`/details/1`]}>
-          <ThemeProvider>
-            <Card />
-          </ThemeProvider>
-        </MemoryRouter>
-      </Provider>
-    );
-
-    expect(component).toMatchSnapshot();
+  afterEach(() => {
+    jest.restoreAllMocks();
+    cleanup();
   });
-  it('Loader should appear while data is fetching', async () => {
-    renderWithRouter(<Card />, {
-      route: '/details/1',
-    });
 
-    const loader = await screen.findByTestId('loader');
-    expect(loader).toBeInTheDocument();
-  });
-  it('Check if the detailed card component correctly displays the character data;', async () => {
-    renderWithRouter(<Card />, {
-      route: '/details/1',
-    });
+  test('Check if displays card data', async () => {
+    await renderWithProviders(await Card({ id: '1' }));
 
-    const characterName = await screen.getByText(/Morty/i);
-    expect(characterName).toBeInTheDocument();
+    const name = await screen.findByText('Rick Sanchez');
+    expect(name).toBeInTheDocument();
+
+    const species = await screen.findByText('Human');
+    expect(species).toBeInTheDocument();
+
+    const gender = await screen.findByText('Male');
+    expect(gender).toBeInTheDocument();
+
+    const planet = await screen.findByText('Citadel of Ricks');
+    expect(planet).toBeInTheDocument();
   });
 });

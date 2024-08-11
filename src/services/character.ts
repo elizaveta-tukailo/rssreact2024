@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type ICard from '../interfaces/ICard';
-
+import type { Action, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
+import { RootState } from '../store/store';
 interface Info {
   count: number;
   pages: number;
@@ -18,11 +20,21 @@ interface GetCharactersQueryParams {
   search?: string;
 }
 
+function isHydrateAction(action: Action): action is PayloadAction<RootState> {
+  return action.type === HYDRATE;
+}
+
 export const characterApi = createApi({
   reducerPath: 'characterApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://rickandmortyapi.com/api/character/',
   }),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  extractRehydrationInfo(action, { reducerPath }): any {
+    if (isHydrateAction(action)) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     getCharacters: builder.query<Transform, GetCharactersQueryParams>({
       query: ({ page, search }) => {
@@ -46,4 +58,8 @@ export const characterApi = createApi({
   }),
 });
 
-export const { useGetCharactersQuery, useGetCharacterQuery } = characterApi;
+export const {
+  useGetCharactersQuery,
+  useGetCharacterQuery,
+  util: { getRunningQueriesThunk },
+} = characterApi;

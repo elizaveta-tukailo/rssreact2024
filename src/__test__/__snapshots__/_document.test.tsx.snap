@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Document html Should render correctly 1`] = `
+<DocumentFragment>
+  <link
+    href="/app/favicon.ico"
+    rel="icon"
+  />
+  <div
+    id="__next"
+  >
+    <main />
+    <script />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MyDocument renders correctly 1`] = `
+<DocumentFragment>
+  <link
+    href="/app/favicon.ico"
+    rel="icon"
+  />
+  <div
+    id="__next"
+  >
+    <main />
+    <script />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Test document hrml Check if document renders correctly 1`] = `
+<DocumentFragment>
+  <link
+    href="/app/favicon.ico"
+    rel="icon"
+  />
+  <div
+    id="__next"
+  >
+    <main />
+    <script />
+  </div>
+</DocumentFragment>
+`;
