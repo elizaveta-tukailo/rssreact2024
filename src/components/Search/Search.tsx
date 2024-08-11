@@ -1,22 +1,31 @@
 import { ChangeEvent } from 'react';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import styles from './search.module.css';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useRouter } from 'next/router';
 
 const Search: React.FC = () => {
+  const router = useRouter();
   const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
-  const navigate = useNavigate();
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    navigate(`?search=${searchQuery}`);
-    localStorage.setItem('searchQuery', searchQuery);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('searchQuery', searchQuery);
+    }
+    const newQuery = {
+      page: '1',
+      search: searchQuery,
+      ...(router.query.details && { details: router.query.details }),
+    };
+    router.push({ pathname: router.pathname, query: newQuery });
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+    if (typeof window !== 'undefined') {
+      setSearchQuery(event.target.value);
+    }
   };
 
   return (

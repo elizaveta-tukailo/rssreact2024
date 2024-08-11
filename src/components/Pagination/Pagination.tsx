@@ -1,6 +1,6 @@
 import styles from './pagination.module.css';
-import { NavLink } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useRouter } from 'next/router';
 
 interface PaginationProps {
   totalCount: number;
@@ -9,10 +9,10 @@ interface PaginationProps {
 
 const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
   const { theme } = useTheme();
+  const router = useRouter();
+  const { query } = router;
 
   const itemsCount = totalCount;
-  const searchQuery = localStorage.getItem('searchQuery');
-
   const itemsPerPage = 20;
   const pages = [];
   const pagesCount = Math.ceil(itemsCount / itemsPerPage);
@@ -31,19 +31,35 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
 
   const paginationsOnPage = pages.slice(startPage - 1, endPage);
 
-  const searchParams = searchQuery ? `?search=${searchQuery}` : '';
+  const setActiveClass = (page: string) => {
+    if (query.page) {
+      return query.page === page ? styles.active : '';
+    }
+    return '';
+  };
+
+  const handlePageChange = (page: number) => {
+    const newQuery = { ...query, page: String(page) };
+
+    router.push({
+      pathname: router.pathname,
+      query: newQuery,
+    });
+  };
 
   return (
     <div className="container">
       <div className={`${styles.pagination} ${styles[theme]}`}>
         {paginationsOnPage.map((page) => (
-          <NavLink
-            to={`/page/${page}${searchParams}`}
-            className={({ isActive }) => (isActive ? styles.active : undefined)}
-            key={page + 1}
+          <div
+            className={`${styles.paginationItem} ${setActiveClass(String(page))}`}
+            key={page}
+            onClick={() => {
+              handlePageChange(page);
+            }}
           >
             {page}
-          </NavLink>
+          </div>
         ))}
       </div>
     </div>

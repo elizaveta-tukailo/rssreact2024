@@ -1,4 +1,4 @@
-import styles from './error-page.module.css';
+import styles from '../styles/error-page.module.css';
 
 const ErrorPage: React.FC = () => {
   const handleResetSubmit = () => {

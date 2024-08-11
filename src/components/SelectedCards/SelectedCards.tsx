@@ -30,6 +30,18 @@ const SelectedCards = () => {
 
   const blob = new Blob([...fileData], { type: 'text/csv;charset=utf-8' });
 
+  const createUrl = () => {
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.URL !== 'undefined' &&
+      typeof window.URL.createObjectURL === 'function' &&
+      blob instanceof Blob
+    ) {
+      return String(window.URL.createObjectURL(blob));
+    } else {
+      return '';
+    }
+  };
   return (
     <div
       className={`${styles.selectedItems} ${styles[`selectedItems${toCapitalize(theme)}`]}`}
@@ -42,13 +54,15 @@ const SelectedCards = () => {
           <button
             className={styles.selectedItemsButton}
             onClick={handleUnselectCards}
+            data-testid="unselect-btn"
           >
             Unselect all
           </button>
           <a
-            href={window.URL.createObjectURL(blob)}
+            href={createUrl()}
             className={styles.selectedItemsButton}
             download={`${selectedCharacters.length}_characters`}
+            data-testid="download-btn"
           >
             Download
           </a>

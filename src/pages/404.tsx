@@ -1,4 +1,5 @@
-import styles from './not-found-page.module.css';
+import styles from '../styles/not-found-page.module.css';
+
 const NotFoundPage: React.FC = () => {
   return (
     <div className={styles['notFound']}>

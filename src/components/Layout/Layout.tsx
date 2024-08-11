@@ -1,9 +1,11 @@
-import { Outlet } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
-import Header from '../Header';
+import Header from '../Header/Header';
 import styles from './layout.module.css';
 
-const Layout: React.FC = () => {
+interface LayoutProps {
+  children: React.ReactNode;
+}
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { theme } = useTheme();
   const themeClass =
     theme === 'dark' ? styles['pageWrapDark'] : styles['pageWrapLight'];
@@ -11,7 +13,7 @@ const Layout: React.FC = () => {
     <div className={`${styles['pageWrap']} ${themeClass}`}>
       <Header />
       <div className={styles['container']}>
-        <Outlet />
+        <main>{children}</main>
       </div>
     </div>
   );

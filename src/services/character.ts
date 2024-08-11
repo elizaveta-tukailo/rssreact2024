@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type ICard from '../interfaces/ICard';
+import type { Action, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 interface Info {
   count: number;
@@ -12,10 +14,15 @@ interface Transform {
   info: Info;
   results: ICard[];
 }
+type RootState = any;
 
 interface GetCharactersQueryParams {
   page: number;
   search?: string;
+}
+
+function isHydrateAction(action: Action): action is PayloadAction<RootState> {
+  return action.type === HYDRATE;
 }
 
 export const characterApi = createApi({
@@ -23,6 +30,11 @@ export const characterApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://rickandmortyapi.com/api/character/',
   }),
+  extractRehydrationInfo(action, { reducerPath }): any {
+    if (isHydrateAction(action)) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     getCharacters: builder.query<Transform, GetCharactersQueryParams>({
       query: ({ page, search }) => {
@@ -46,4 +58,8 @@ export const characterApi = createApi({
   }),
 });
 
-export const { useGetCharactersQuery, useGetCharacterQuery } = characterApi;
+export const {
+  useGetCharactersQuery,
+  useGetCharacterQuery,
+  util: { getRunningQueriesThunk },
+} = characterApi;
