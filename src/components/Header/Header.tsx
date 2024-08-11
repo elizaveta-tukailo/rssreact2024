@@ -1,3 +1,4 @@
+'use client';
 import styles from './header.module.css';
 import { useTheme } from '../../context/ThemeContext';
 import Link from 'next/link';

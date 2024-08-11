@@ -1,15 +1,13 @@
+'use client';
 import ICard from '@/src/interfaces/ICard';
 import styles from './cards-list.module.css';
 import { useTheme } from '@/src/context/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from '@/src/interfaces/IStore';
-import {
-  setCharacterData,
-  setIsClosed,
-} from '@/src/store/reducers/characterDetailSlice';
+import { setCharacterData } from '@/src/store/reducers/characterDetailSlice';
 import { ChangeEvent, useMemo } from 'react';
 import { toggleCharacter } from '@/src/store/reducers/selectedCharactersSlice';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface CardsProps {
   cards: ICard[];
@@ -17,6 +15,11 @@ interface CardsProps {
 
 const CardsList: React.FC<CardsProps> = ({ cards }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const details = parseInt(searchParams!.get('details') || '');
+  const page = parseInt(searchParams!.get('page') || '1', 10);
+  const searchQuery = searchParams!.get('search') || '';
+
   let selectedItems: number[] = [];
   const { theme } = useTheme();
   const dispatch = useDispatch();
@@ -29,8 +32,11 @@ const CardsList: React.FC<CardsProps> = ({ cards }) => {
       !characterDetail.isClosed &&
       (event.target as HTMLElement).id == 'people-items'
     ) {
-      dispatch(setIsClosed({ isClosed: true, characterId: 0 }));
       dispatch(setCharacterData([]));
+      const params = new URLSearchParams(searchParams?.toString());
+      params.delete('details');
+
+      router.push(`?${params.toString()}`);
     }
   };
 
@@ -51,15 +57,15 @@ const CardsList: React.FC<CardsProps> = ({ cards }) => {
   };
 
   const handleCardClick = (characterId: string) => {
-    const newQuery = { ...router.query };
-    newQuery.details = characterId;
-    router.push({ pathname: router.pathname, query: newQuery });
-    dispatch(
-      setIsClosed({
-        isClosed: false,
-        characterId: characterId,
-      })
-    );
+    const params = new URLSearchParams({
+      page: page.toString(),
+      details: characterId,
+    });
+    if (searchQuery) {
+      params.append('search', searchQuery);
+    }
+    router.push(`/?${params.toString()}`);
+
     const cardData = cards.find((card) => card.id === Number(characterId));
     dispatch(setCharacterData(cardData));
   };
@@ -88,7 +94,7 @@ const CardsList: React.FC<CardsProps> = ({ cards }) => {
                 <div className={styles['mainPeopleItem']}>
                   <div
                     className={
-                      characterDetail.isClosed === false
+                      Boolean(details) === true
                         ? `${styles['mainPeopleItemImage']} ${styles['mainPeopleItemImageDisabled']}`
                         : `${styles['mainPeopleItemImage']}`
                     }

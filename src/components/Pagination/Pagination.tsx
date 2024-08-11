@@ -1,6 +1,8 @@
+'use client';
+
 import styles from './pagination.module.css';
 import { useTheme } from '../../context/ThemeContext';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   totalCount: number;
@@ -10,8 +12,9 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
   const { theme } = useTheme();
   const router = useRouter();
-  const { query } = router;
-
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams!.get('search') || '';
+  const details = searchParams!.get('details') || '';
   const itemsCount = totalCount;
   const itemsPerPage = 20;
   const pages = [];
@@ -32,19 +35,23 @@ const Pagination: React.FC<PaginationProps> = ({ totalCount, currentPage }) => {
   const paginationsOnPage = pages.slice(startPage - 1, endPage);
 
   const setActiveClass = (page: string) => {
-    if (query.page) {
-      return query.page === page ? styles.active : '';
+    if (currentPage) {
+      return String(currentPage) === page ? styles.active : '';
     }
     return '';
   };
 
   const handlePageChange = (page: number) => {
-    const newQuery = { ...query, page: String(page) };
-
-    router.push({
-      pathname: router.pathname,
-      query: newQuery,
+    const params = new URLSearchParams({
+      page: page.toString(),
     });
+    if (searchQuery) {
+      params.append('search', searchQuery);
+    }
+    if (details) {
+      params.append('details', details);
+    }
+    router.push(`/?${params.toString()}`);
   };
 
   return (

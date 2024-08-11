@@ -1,3 +1,4 @@
+'use client';
 import { useTheme } from '../../context/ThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from '../../interfaces/IStore';
@@ -42,6 +43,9 @@ const SelectedCards = () => {
       return '';
     }
   };
+  if (selectedCharacters.length < 1) {
+    return null;
+  }
   return (
     <div
       className={`${styles.selectedItems} ${styles[`selectedItems${toCapitalize(theme)}`]}`}
