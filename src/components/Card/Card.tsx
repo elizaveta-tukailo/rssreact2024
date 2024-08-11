@@ -17,39 +17,41 @@ async function getCharacter(id: string) {
   return { character };
 }
 
-const Card = async ({ id }: CardProp) => {
+const Card = async (props: CardProp) => {
+  const { id } = props || {};
   const { character } = await getCharacter(id);
-  if (!character) {
-    return <div>No data found!</div>;
-  }
   return (
     <>
-      <div className={`${styles['cardItemWrap']} `} data-testid="detail-card">
-        <div className={styles['cardItem']}>
-          <div className={styles['cardItemId']}>Card ID: {character.id}</div>
-          <h3 className={styles['cardItemTitle']}> {character.name} </h3>
-          <CloseCard />
-        </div>
-        <div className={styles['cardItemRow']}>
-          <div className={styles['cardItemImage']}>
-            <img src={character.image} alt={character.name} />
+      {character ? (
+        <div className={`${styles['cardItemWrap']} `} data-testid="detail-card">
+          <div className={styles['cardItem']}>
+            <div className={styles['cardItemId']}>Card ID: {character.id}</div>
+            <h3 className={styles['cardItemTitle']}> {character.name} </h3>
+            <CloseCard />
           </div>
-          <div className={styles['cardItemInfo']}>
-            <div className={styles['cardItemInfoItem']}>
-              <span>Species:</span> {character.species}
+          <div className={styles['cardItemRow']}>
+            <div className={styles['cardItemImage']}>
+              <img src={character.image} alt={character.name} />
             </div>
-            <div className={styles['cardItemInfoItem']}>
-              <span>Status:</span> {character.status}
-            </div>
-            <div className={styles['cardItemInfoItem']}>
-              <span> Gender:</span> {character.gender}
-            </div>
-            <div className={styles['cardItemInfoItem']}>
-              <span>Planet:</span> {character.location?.name}
+            <div className={styles['cardItemInfo']}>
+              <div className={styles['cardItemInfoItem']}>
+                <span>Species:</span> {character.species}
+              </div>
+              <div className={styles['cardItemInfoItem']}>
+                <span>Status:</span> {character.status}
+              </div>
+              <div className={styles['cardItemInfoItem']}>
+                <span> Gender:</span> {character.gender}
+              </div>
+              <div className={styles['cardItemInfoItem']}>
+                <span>Planet:</span> {character.location?.name}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div>No data found!</div>
+      )}
     </>
   );
 };

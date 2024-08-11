@@ -76,16 +76,22 @@ const CardsList: React.FC<CardsProps> = ({ cards }) => {
         className={`${styles['mainPeopleItems']} ${styles[theme]}`}
         onClick={(e) => closeCardDetail(e)}
         id="people-items"
+        data-testid="people-items"
       >
         {cards.map((card: ICard) => {
           return (
-            <div className={`${styles['mainPeopleItemWrap']}`} key={card.id}>
+            <div
+              className={`${styles['mainPeopleItemWrap']}`}
+              key={card.id}
+              data-testid="card"
+            >
               <input
                 className={styles['mainPeopleItemCheckbox']}
                 type="checkbox"
                 name={card.id.toString()}
                 checked={selectedItems.includes(card.id)}
                 onChange={handleCardCheckboxChange}
+                data-testid={`card_checkbox_${card.id.toString()}`}
               />
               <div
                 id={String(card.id)}
