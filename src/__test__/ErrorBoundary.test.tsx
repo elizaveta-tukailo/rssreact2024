@@ -4,8 +4,8 @@ import ErrorButton from '../components/ErrorBoundary/Button';
 import '@testing-library/jest-dom';
 import { ThemeProvider } from '../context/ThemeContext';
 
-describe('ErrorBoundary Component', () => {
-  it('Check if page renders children without error', () => {
+describe('Testing ErrorBoundary Component', () => {
+  test('Check if page renders children without error', () => {
     render(
       <ErrorBoundary>
         <ThemeProvider>
@@ -16,7 +16,7 @@ describe('ErrorBoundary Component', () => {
     expect(screen.getByText('Child Component')).toBeInTheDocument();
   });
 
-  it('catches error and displays error message', () => {
+  test('Should catches error and displays error message', () => {
     render(
       <ErrorBoundary>
         <ThemeProvider>

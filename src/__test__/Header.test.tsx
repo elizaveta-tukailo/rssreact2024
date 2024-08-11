@@ -1,21 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ThemeProvider, useTheme } from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 import Header from '../components/Header/Header';
 import styles from './header.module.css';
-import Search from '../components/Search/Search';
 
 jest.mock('../context/ThemeContext', () => ({
   useTheme: jest.fn(),
 }));
 
-const MockThemeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  return <ThemeProvider>{children}</ThemeProvider>;
-};
-
-describe('Header Component', () => {
+describe('Testing Header Component', () => {
   beforeEach(() => {
     (useTheme as jest.Mock).mockReturnValue({
       theme: 'light',
@@ -23,7 +16,7 @@ describe('Header Component', () => {
     });
   });
 
-  test('renders Header component', () => {
+  test('Renders Header component', () => {
     render(<Header />);
     expect(screen.getByText('Home')).toBeInTheDocument();
   });
@@ -49,7 +42,7 @@ describe('Header Component', () => {
     expect(toggleThemeMock).toHaveBeenCalled();
   });
 
-  test('Check if header renders with dark theme', () => {
+  test('Check if header renders with the dark theme', () => {
     (useTheme as jest.Mock).mockReturnValue({
       theme: 'dark',
       toggleTheme: jest.fn(),

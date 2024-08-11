@@ -8,10 +8,6 @@ interface ThemeContextProps {
   toggleTheme: () => void;
 }
 
-const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <ThemeProvider>{children}</ThemeProvider>
-);
-
 const TestComponent: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   return (
@@ -22,8 +18,8 @@ const TestComponent: React.FC = () => {
   );
 };
 
-describe('ThemeContext', () => {
-  it('provides the default theme and allows toggling', () => {
+describe('Testing ThemeContext', () => {
+  test('Test a default theme', () => {
     const mockToggleTheme = jest.fn();
     const mockContextValue: ThemeContextProps = {
       theme: 'light',
@@ -42,7 +38,7 @@ describe('ThemeContext', () => {
 
     expect(mockToggleTheme).toHaveBeenCalled();
   });
-  test('should not throw error if useTheme is used within ThemeProvider', () => {
+  test('Should not throw error if useTheme is used within ThemeProvider', () => {
     expect(() => {
       render(
         <ThemeProvider>
@@ -52,7 +48,7 @@ describe('ThemeContext', () => {
     }).not.toThrow();
   });
 
-  it('throws an error when used outside of ThemeProvider', () => {
+  test('Should throws an error when used outside of ThemeProvider', () => {
     const renderWithoutProvider = () => render(<TestComponent />);
     expect(renderWithoutProvider).toThrow(
       'useTheme must be used within a ThemeProvider'

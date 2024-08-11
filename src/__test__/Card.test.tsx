@@ -1,95 +1,33 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import 'whatwg-fetch';
 import Card from '../components/Card/Card';
-import { useGetCharacterQuery } from '../services/character';
-import {
-  setCharacterData,
-  setIsClosed,
-} from '../store/reducers/characterDetailSlice';
-import { useRouter } from 'next/router';
-import { character, characters } from './__mocks__/charactersMockData';
+import { cleanup, screen } from '@testing-library/react';
+import { renderWithProviders } from '../utils/renderWithProvider';
 
-jest.mock('../services/character');
-jest.mock('../context/ThemeContext', () => ({
-  useTheme: () => ({ theme: 'light' }),
-}));
-jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
-}));
-const mockStore = configureStore([]);
+jest.mock('../components/CloseCard/CloseCard', () => () => <div>Close</div>);
 
-describe('Card Component', () => {
-  let store = mockStore({});
-
-  beforeEach(() => {
-    store = mockStore({
-      characterDetail: {},
-      pageCharacters: characters,
-    });
-
+describe('Testing Card Component', () => {
+  afterAll(() => {
     jest.clearAllMocks();
   });
 
-  test('renders character data correctly', () => {
-    (useRouter as jest.Mock).mockReturnValue({ query: { details: '1' } });
-    const characterData = character;
-    (useGetCharacterQuery as jest.Mock).mockReturnValue({
-      isFetching: false,
-      data: characterData,
-      error: null,
-    });
-
-    render(
-      <Provider store={store}>
-        <Card />
-      </Provider>
-    );
-
-    expect(screen.getByText('Card ID: 1')).toBeInTheDocument();
-    expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
+  afterEach(() => {
+    jest.restoreAllMocks();
+    cleanup();
   });
 
-  test('dispatches close modal action on button click', () => {
-    (useRouter as jest.Mock).mockReturnValue({ query: { details: '1' } });
-    const characterData = character;
-    (useGetCharacterQuery as jest.Mock).mockReturnValue({
-      isFetching: false,
-      data: characterData,
-      error: null,
-    });
+  test('Check if displays card data', async () => {
+    await renderWithProviders(await Card({ id: '1' }));
 
-    const dispatchSpy = jest.spyOn(store, 'dispatch');
+    const name = await screen.findByText('Rick Sanchez');
+    expect(name).toBeInTheDocument();
 
-    render(
-      <Provider store={store}>
-        <Card />
-      </Provider>
-    );
+    const species = await screen.findByText('Human');
+    expect(species).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole('button'));
+    const gender = await screen.findByText('Male');
+    expect(gender).toBeInTheDocument();
 
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      setIsClosed({ isClosed: true, characterId: 0 })
-    );
-    expect(dispatchSpy).toHaveBeenCalledWith(setCharacterData([]));
-  });
-
-  test('renders error message when error occurs', () => {
-    (useRouter as jest.Mock).mockReturnValue({ query: { details: '1' } });
-    (useGetCharacterQuery as jest.Mock).mockReturnValue({
-      isFetching: false,
-      data: null,
-      error: true,
-    });
-
-    render(
-      <Provider store={store}>
-        <Card />
-      </Provider>
-    );
-
-    expect(screen.getByText('No data found!')).toBeInTheDocument();
+    const planet = await screen.findByText('Citadel of Ricks');
+    expect(planet).toBeInTheDocument();
   });
 });
