@@ -14,15 +14,11 @@ const formsDataSlice = createSlice({
   name: 'formsData',
   initialState,
   reducers: {
-    addData(state, action: PayloadAction<FormFields>) {
-      //console.log(state);
+    setData(state, action: PayloadAction<FormFields>) {
       state.formData.push(action.payload);
-    },
-    getAllData(state) {
-      console.log(state);
     },
   },
 });
 
-export const { addData, getAllData } = formsDataSlice.actions;
-export default formsDataSlice.reducer;
+export const { setData } = formsDataSlice.actions;
+export const formsDataReducer = formsDataSlice.reducer;

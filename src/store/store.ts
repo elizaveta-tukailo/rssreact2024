@@ -1,13 +1,11 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import uncontrolledFormReducer from './slices/formsDataSlice.ts';
-
-const rootReducer = combineReducers({
-  uncontrolledForm: uncontrolledFormReducer,
-});
+import { configureStore } from '@reduxjs/toolkit';
+import { countriesReducer } from './slices/countriesSlice';
+import { formsDataReducer } from './slices/formsDataSliceSlice';
 
 export const store = configureStore({
   reducer: {
-    reducer: rootReducer,
+    countries: countriesReducer,
+    formsData: formsDataReducer,
   },
 });
 
