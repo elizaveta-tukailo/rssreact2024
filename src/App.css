@@ -1,0 +1,13 @@
+.forms {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 16px;
+}
+.forms .form {
+  margin-bottom: 12px;
+  width: 100%;
+  max-width: unset;
+}
+.forms .form.last {
+  background-color: #fecd28;
+}
