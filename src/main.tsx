@@ -8,19 +8,25 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
+import { Layout } from './components/Layout/Layout.tsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
-  },
-  {
-    path: '/uncontrolled-form',
-    element: <UncontrolledForm />,
-  },
-  {
-    path: '/hook-form',
-    element: <HookForm />,
+    element: <Layout />,
+    children: [
+      {
+        path: '/',
+        element: <App />,
+      },
+      {
+        path: '/uncontrolled-form',
+        element: <UncontrolledForm />,
+      },
+      {
+        path: '/hook-form',
+        element: <HookForm />,
+      },
+    ],
   },
 ]);
 
