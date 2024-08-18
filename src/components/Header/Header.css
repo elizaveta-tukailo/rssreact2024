@@ -1,0 +1,14 @@
+.header {
+    background-color: #2C7DFB;
+}
+.header nav a {
+    margin-right: 16px;
+    color: #ffffff;
+    text-decoration: none;
+}
+.header nav a:hover {
+    color: #FECD27;
+}
+.header nav a:last-child {
+    margin-right: 0;
+}
