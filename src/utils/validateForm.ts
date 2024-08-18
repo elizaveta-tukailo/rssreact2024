@@ -1,22 +1,22 @@
-import { object, string, number, mixed, ref, boolean } from 'yup';
-import FormFields from '../interfaces/form';
+import { object, string, number, ref, boolean, mixed } from 'yup';
+import { countriesList } from './../utils/countriesList';
+import AllFormFields from '../interfaces/form';
 
-const formSchema = object<FormFields>().shape({
+const formSchema = object<AllFormFields>().shape({
   name: string()
-    .required('Name is required field')
-    .min(1, 'Write at least one letter')
-    .matches(/^[A-ZА-ЯЁ]/, 'The first letter of the name must be capital')
-    .typeError('The first letter of the name must be capital'),
+    .required('Name is required')
+    .matches(/^[A-ZА-ЯЁ]/, 'The first letter of the name must be capital'),
   age: number()
     .required('Age is required field')
     .positive('Age must be positive')
-    .typeError('Age must be positive'),
+    .integer('Age must be integer')
+    .typeError('Age must be a number'),
   email: string()
     .required('Email is required field')
-    .email('The email format should be test@example.com')
-    .typeError('The email format should be test@example.com'),
+    .email('The email format should be test@example.com'),
   password: string()
     .required('Password is required')
+    .min(4, 'Password must be at least 4 characters long')
     .matches(
       /[A-ZА-ЯЁ]/,
       'Password strength: must have at least one uppercase letter'
@@ -28,28 +28,52 @@ const formSchema = object<FormFields>().shape({
     .matches(/[0-9]/, 'Password strength: must have at least one digit')
     .matches(
       /[^A-ZА-Яa-zа-я0-9Ёё\s]/,
-      'Pas must contain at least one special character(!@#$%^&*)'
+      'Password must contain at least one special character(!@#$%^&*)'
     ),
-  confirmedPassword: string()
-    .required('Passwords confirmation is required')
+  confirmPassword: string()
+    .required('Password confirmation is required')
     .oneOf([ref('password')], 'Passwords must match'),
   gender: string().required('Choose gender'),
-  picture: mixed<File>()
-    .required('You need to provide a file')
-    .test('fileSize', 'The file is too large', (value) => {
-      return value && value.size <= 2000000;
-    })
-    .test('type', 'Accepted only: .jpeg, .png', (value) => {
-      if (value) {
-        const fileType: string = value.type;
-        return fileType === 'image/png' || fileType === 'image/jpeg';
+  picture: mixed<File | FileList>()
+    .required('Picture is required')
+    .test('isAllowedFileSize', 'Max file size 5MB is allowed', (value) => {
+      let file: File | undefined;
+      if (value instanceof FileList) {
+        file = value[0];
+      } else if (value instanceof File) {
+        file = value;
       }
-      return false;
-    }),
-  acceptTerms: boolean()
-    .required('Accept T&C is required')
-    .oneOf([true], 'Accept T&C'),
-  country: string().required('Country is required!'),
+      if (!file) {
+        return false;
+      }
+      return file.size <= 5 * 1024 * 1024;
+    })
+    .test(
+      'isAllowedFileType',
+      'Only PNG and JPEG file types are allowed',
+      (value) => {
+        let file: File | undefined;
+        if (value instanceof FileList) {
+          file = value[0];
+        } else if (value instanceof File) {
+          file = value;
+        }
+        if (!file) {
+          return false;
+        }
+        const allowedTypes = ['image/png', 'image/jpeg'];
+        return allowedTypes.includes(file.type);
+      }
+    ),
+  terms: boolean()
+    .required('Accept Terms&Conditions is required')
+    .oneOf([true], 'Accept Terms&Concitions'),
+  country: string()
+    .test(
+      'isValidCountry',
+      'Invalid country name',
+      (value) => value === '' || countriesList.includes(value || '')
+    )
+    .required('Country is required'),
 });
-
 export default formSchema;
