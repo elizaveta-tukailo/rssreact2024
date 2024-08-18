@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import FormFields from '../../interfaces/form';
 
-interface FormFieldsState {
+type FormFieldsState = {
   formData: FormFields[];
-}
+};
 
 const initialState: FormFieldsState = {
   formData: [],
